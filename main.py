@@ -14,7 +14,8 @@ from address_parser import (
 from analyze import (
     addr_type_distribution,
     addr_tags_distribution,
-    addr_duplicates
+    addr_duplicates,
+    addr_missing
 )
 from overpass import download_osm_data, is_element
 
@@ -53,6 +54,13 @@ def main():
         f'\nDuplicated OSM addresses: {len(duplicated_addr)}/{total_osm_addr}'
         f' ({len(duplicated_addr)*100/total_osm_addr:.2f}%)'
     )
+
+    missing_emapa_addresses = addr_missing(osm_addresses, emapa_addresess)
+    print(f'**Missing emapa addresses: {len(missing_emapa_addresses)}')
+
+    geojson: Dict[str, Any] = addresses_to_geojson(missing_emapa_addresses)
+    with open(path.join(OUTPUT_DIR, 'missing_addresses.geojson'), 'w') as f:
+        json.dump(geojson, f, indent=4)
 
     geojson: Dict[str, Any] = addresses_to_geojson(emapa_addresess)
     with open(path.join(OUTPUT_DIR, 'all_addresses.geojson'), 'w') as f:

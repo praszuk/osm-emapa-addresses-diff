@@ -1,7 +1,7 @@
 from collections import Counter
-from typing import Dict, List
+from typing import Dict, List, Set
 
-from address import OsmAddress
+from address import Address, OsmAddress
 
 
 def addr_tags_distribution(addresses: List[OsmAddress]) -> Counter:
@@ -35,3 +35,27 @@ def addr_duplicates(osm_addresses: List[OsmAddress]) -> List[List[OsmAddress]]:
         duplicated_osm_addr[osm_min_addr].append(osm_addr)
 
     return list(filter(lambda v: len(v) > 1, duplicated_osm_addr.values()))
+
+
+def addr_missing(
+    osm_addresses: List[OsmAddress],
+    emapa_addresess: List[Address]
+) -> List[Address]:
+    all_osm_min_addr: Set[str] = set()
+    for osm_addr in osm_addresses:
+        osm_min_addr = f'{osm_addr.city}' \
+            f'{osm_addr.street if osm_addr.street else ""}' \
+            f'{osm_addr.housenumber}'
+
+        all_osm_min_addr.add(osm_min_addr)
+
+    missing_addresses = []
+    for emapa_addr in emapa_addresess:
+        emapa_min_addr = f'{emapa_addr.city}' \
+            f'{emapa_addr.street if emapa_addr.street else ""}' \
+            f'{emapa_addr.housenumber}'
+
+        if emapa_min_addr not in all_osm_min_addr:
+            missing_addresses.append(emapa_addr)
+
+    return missing_addresses
