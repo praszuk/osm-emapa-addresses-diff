@@ -12,3 +12,11 @@ def addr_tags_distribution(addresses: List[OsmAddress]) -> Counter:
                 tags[key] += 1
 
     return tags
+
+
+def addr_type_distribution(addresses: List[OsmAddress]) -> Counter:
+    osm_type = Counter()
+    for addr in addresses:
+        osm_type[addr.osm_type] += 1
+
+    return osm_type

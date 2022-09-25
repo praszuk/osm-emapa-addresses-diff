@@ -11,7 +11,7 @@ from address_parser import (
     addresses_to_geojson,
     parse_from_osm_element
 )
-from analyze import addr_tags_distribution
+from analyze import addr_type_distribution, addr_tags_distribution
 from overpass import download_osm_data, is_element
 
 
@@ -31,6 +31,10 @@ def main():
     logging.debug(f'Downloaded {len(elements)} OSM elements.')
     osm_addresses: List[Address] = list(map(parse_from_osm_element, elements))
     logging.info(f'Parsed {len(osm_addresses)} OSM addresses.')
+
+    print('\nOsm type:')
+    osm_type_dist = addr_type_distribution(osm_addresses).most_common()
+    print('\n'.join(f'{k}: {v}' for k, v in osm_type_dist))
 
     print('\nKey-values distribution:')
     kv_dist: List[Tuple] = addr_tags_distribution(osm_addresses).most_common()
