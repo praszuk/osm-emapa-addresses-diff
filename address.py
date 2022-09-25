@@ -1,5 +1,12 @@
+from enum import Enum
 from dataclasses import dataclass
-from typing import Dict
+from typing import Any, Dict
+
+
+class OsmType(Enum):
+    NODE = 'node'
+    WAY = 'way'
+    RELATION = 'relation'
 
 
 @dataclass
@@ -33,3 +40,10 @@ class Address:
         addr['source:addr'] = 'e-mapa.net'
 
         return addr
+
+
+@dataclass
+class OsmAddress(Address):
+    osm_id: int
+    osm_type: OsmType
+    all_obj_tags: Dict[str, Any]
