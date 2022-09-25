@@ -11,7 +11,11 @@ from address_parser import (
     addresses_to_geojson,
     parse_from_osm_element
 )
-from analyze import addr_type_distribution, addr_tags_distribution
+from analyze import (
+    addr_type_distribution,
+    addr_tags_distribution,
+    addr_duplicates
+)
 from overpass import download_osm_data, is_element
 
 
@@ -28,9 +32,11 @@ def main():
     elements: List[Dict[str, Any]] = list(
         filter(is_element, osm_data['elements'])
     )
+
     logging.debug(f'Downloaded {len(elements)} OSM elements.')
     osm_addresses: List[Address] = list(map(parse_from_osm_element, elements))
-    logging.info(f'Parsed {len(osm_addresses)} OSM addresses.')
+    total_osm_addr = len(osm_addresses)
+    logging.info(f'Parsed {total_osm_addr} OSM addresses.')
 
     print('\nOsm type:')
     osm_type_dist = addr_type_distribution(osm_addresses).most_common()
@@ -40,6 +46,12 @@ def main():
     kv_dist: List[Tuple] = addr_tags_distribution(osm_addresses).most_common()
     print('\n'.join(
         f'{k}: {v} ({v*100/len(osm_addresses):.2f}%)' for k, v in kv_dist)
+    )
+
+    duplicated_addr = addr_duplicates(osm_addresses)
+    print(
+        f'\nDuplicated OSM addresses: {len(duplicated_addr)}/{total_osm_addr}'
+        f' ({len(duplicated_addr)*100/total_osm_addr:.2f}%)'
     )
 
     geojson: Dict[str, Any] = addresses_to_geojson(emapa_addresess)
