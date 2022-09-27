@@ -18,6 +18,7 @@ from analyze import (
     addr_missing
 )
 from overpass import download_osm_data, is_element
+from preprocessing import replace_streets_with_osm_names
 
 
 OUTPUT_DIR = 'out'
@@ -28,6 +29,8 @@ def main():
 
     emapa_addresess: List[Address] = parse_file(input_csv_filename)
     logging.info(f'Parsed {len(emapa_addresess)} emapa addresses.')
+
+    replace_streets_with_osm_names(emapa_addresess)
 
     osm_data: Optional[Dict[str, Any]] = download_osm_data()
     elements: List[Dict[str, Any]] = list(
