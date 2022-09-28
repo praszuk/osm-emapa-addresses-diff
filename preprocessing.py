@@ -14,6 +14,11 @@ STREET_NAMES_MAPPING_FILE = path.join('data', 'street_names_mappings.csv')
 
 
 def _load_mappings_data() -> Dict[str, Dict[str, str]]:
+    """
+    :return: dictionary with city_simc, teryr_street_name and osm_street_name
+    Dict[city_simc, Dict[origin_name, osm_name]]
+
+    """
     street_names: Dict[str, Dict[str, str]] = dict()
 
     with open(STREET_NAMES_MAPPING_FILE, 'r') as csv_file:
@@ -41,10 +46,12 @@ def replace_streets_with_osm_names(emapa_addresses: List[Address]) -> None:
     It uses .csv file from gugik2osm:
     https://github.com/openstreetmap-polska/gugik2osm/
     blob/main/processing/sql/data/street_names_mappings.csv
+
+    :param emapa_addresses: address to find and optionally match and replace
+    street_names
     """
 
-    # k: simc, dict[sym_ul, Tuple[origin name, osm name]]
-    street_names = _load_mappings_data()
+    street_names: Dict[str, Dict[str, str]] = _load_mappings_data()
     matched_streets = set()
 
     for addr in emapa_addresses:
