@@ -9,7 +9,9 @@ from address import Address
 
 STREET_NAMES_MAPPING_FILE = path.join('data', 'street_names_mappings.csv')
 
+
 # TODO add update check from github
+
 
 def _load_mappings_data() -> Dict[str, Dict[str, str]]:
     street_names: Dict[str, Dict[str, str]] = dict()
@@ -19,7 +21,8 @@ def _load_mappings_data() -> Dict[str, Dict[str, str]]:
         for row in reader:
             simc = row['teryt_simc_code']
             # sym_ul = row['teryt_ulic_code']
-            origin_name = row['teryt_street_name']
+            # lower – to avoid divergence between PRG and local e-mapa datasets
+            origin_name = row['teryt_street_name'].lower()
             osm_name = row['osm_street_name']
 
             if simc not in street_names:
@@ -51,10 +54,10 @@ def replace_streets_with_osm_names(emapa_addresses: List[Address]) -> None:
         if addr.city_simc not in street_names:
             continue
 
-        if addr.street not in street_names[addr.city_simc]:
+        if addr.street.lower() not in street_names[addr.city_simc]:
             continue
 
-        new_street_name = street_names[addr.city_simc][addr.street]
+        new_street_name = street_names[addr.city_simc][addr.street.lower()]
         addr.street = new_street_name
         matched_streets.add(new_street_name)
 
