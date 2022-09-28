@@ -1,5 +1,6 @@
 import json
 import logging
+import sys
 
 from os import path
 from sys import argv
@@ -17,17 +18,35 @@ from analyze import (
     addr_duplicates,
     addr_missing
 )
+from exceptions import TerytNotFound, EmapaServiceNotFound
 from overpass import download_osm_data, is_element
 from preprocessing import replace_streets_with_osm_names
+from gugik_util import download_emapa_csv
 
 
 OUTPUT_DIR = 'out'
 
 
 def main():
-    input_csv_filename = argv[1]
+    teryr_terc = argv[1]
+    try:
+        csv_filename, local_system_url = download_emapa_csv(
+            teryr_terc,
+            OUTPUT_DIR
+        )
+    except TerytNotFound:
+        logging.error(f'Teryt {teryr_terc} not found at GUGiK website!')
+        sys.exit(1)
+    except EmapaServiceNotFound:
+        logging.error(f'Not found e-mapa service for teryt: {teryr_terc}')
+        sys.exit(2)
+    except IOError as e:
+        logging.error(f'Error with downloading/saving data: {e}')
+        sys.exit(3)
 
-    emapa_addresess: List[Address] = parse_file(input_csv_filename)
+    emapa_addresess: List[Address] = parse_file(csv_filename, local_system_url)
+    for addr in emapa_addresess:
+        addr.source_addr = local_system_url
     logging.info(f'Parsed {len(emapa_addresess)} emapa addresses.')
 
     replace_streets_with_osm_names(emapa_addresess)
