@@ -5,7 +5,7 @@ from os import path
 from sys import argv
 from typing import Any, Dict, List, Optional, Tuple
 
-from address import Address
+from address import Address, OsmAddress
 from address_parser import (
     parse_file,
     addresses_to_geojson,
@@ -38,7 +38,9 @@ def main():
     )
 
     logging.debug(f'Downloaded {len(elements)} OSM elements.')
-    osm_addresses: List[Address] = list(map(parse_from_osm_element, elements))
+    osm_addresses: List[OsmAddress] = list(
+        map(parse_from_osm_element, elements)
+    )
     total_osm_addr = len(osm_addresses)
     logging.info(f'Parsed {total_osm_addr} OSM addresses.')
 

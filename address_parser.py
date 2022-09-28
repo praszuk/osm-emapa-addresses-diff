@@ -1,12 +1,12 @@
 import csv
 import logging
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from address import Address, OsmAddress, OsmType, Point
 
 
-def parse_csv_row(row) -> Address:
+def parse_csv_row(row) -> Optional[Address]:
     try:
         raw_postcode = row['AdresCSIOZ'].split('|')[0].strip()
         postcode = raw_postcode[:2] + '-' + raw_postcode[2:]
