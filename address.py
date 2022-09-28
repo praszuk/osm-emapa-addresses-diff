@@ -1,6 +1,6 @@
 from enum import Enum
 from dataclasses import dataclass
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 
 class OsmType(Enum):
@@ -24,6 +24,7 @@ class Address:
     postcode: str
     city: str    # city or place, no matters
     street: str  # if no street then None or empty str
+    source: str
 
     def to_osm_tags(self) -> Dict[str, str]:
         addr = {}
@@ -37,7 +38,8 @@ class Address:
         addr['addr:city:simc'] = self.city_simc
         addr['addr:housenumber'] = self.housenumber
         addr['addr:postcode'] = self.postcode
-        addr['source:addr'] = 'e-mapa.net'
+        if self.source:
+            addr['source:addr'] = self.source
 
         return addr
 

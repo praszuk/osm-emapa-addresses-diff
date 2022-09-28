@@ -6,7 +6,12 @@ from typing import Any, Dict, List, Optional
 from address import Address, OsmAddress, OsmType, Point
 
 
-def parse_csv_row(row) -> Optional[Address]:
+def parse_csv_row(row, address_source: str) -> Optional[Address]:
+    """
+    :param row: csv row
+    :param address_source: source of dataset (local map system url)
+    :return: created address or None
+    """
     try:
         raw_postcode = row['AdresCSIOZ'].split('|')[0].strip()
         postcode = raw_postcode[:2] + '-' + raw_postcode[2:]
@@ -19,14 +24,20 @@ def parse_csv_row(row) -> Optional[Address]:
             point=Point(
                 float(row['szerokosc_geograficzna'].strip()),
                 float(row['dlugosc_geograficzna'].strip())
-            )
+            ),
+            source=address_source
         )
     except KeyError:
         logging.warning(f'Couldn\'t parse row: {row}')
         return None
 
 
-def parse_file(input_filename) -> List[Address]:
+def parse_file(input_filename: str, source: str) -> List[Address]:
+    """
+    :param input_filename: csv file with addresses data
+    :param source: URL to local map system from above file is downloaded
+    :return: List of parsed addresses
+    """
     addresses = []
     with open(input_filename, 'r') as csv_file:
         reader = csv.DictReader(csv_file, delimiter=';')
@@ -34,7 +45,7 @@ def parse_file(input_filename) -> List[Address]:
         row_counter = 0
         for row in reader:
             row_counter += 1
-            new_addr = parse_csv_row(row)
+            new_addr = parse_csv_row(row, source)
             if new_addr:
                 addresses.append(new_addr)
 
@@ -58,6 +69,7 @@ def parse_from_osm_element(element: Dict[str, Any]) -> OsmAddress:
         street=element['tags'].get('addr:street', None),
         housenumber=element['tags'].get('addr:housenumber', None),
         postcode=element['tags'].get('addr:postcode', None),
+        source=element['tags'].get('source:addr', None),
         all_obj_tags=element['tags']
     )
 
