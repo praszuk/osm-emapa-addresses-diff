@@ -1,1 +1,1 @@
-[out:json][timeout:900];area[boundary]["teryt:terc"=""]->.searchArea;(nwr["addr:housenumber"](area.searchArea););out center;
+[out:json][timeout:900];area[boundary]["teryt:terc"="<teryt_terc>"]->.searchArea;(nwr["addr:housenumber"](area.searchArea););out center;

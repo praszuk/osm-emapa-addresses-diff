@@ -13,9 +13,14 @@ TIMEOUT = 30  # seconds
 RETRIES = 5
 
 
-def download_osm_data() -> Optional[Dict[Any, Any]]:
+def download_osm_data(teryt_terc: str) -> Optional[Dict[Any, Any]]:
+    """
+    :param teryt_terc: commune (gmina) id
+    all query will use administrative boundary from given value
+    :return: Raw OSM Overpass data JSON (as dict) or None
+    """
     with open(QUERY_FILE, 'r') as f:
-        query = f.read().strip()
+        query = f.read().strip().replace('<teryt_terc>', teryt_terc)
 
     logging.info(f'Read overpass query from file: {QUERY_FILE}')
     logging.info(f'Downloading overpass data...')

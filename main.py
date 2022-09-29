@@ -28,17 +28,17 @@ OUTPUT_DIR = 'out'
 
 
 def main():
-    teryr_terc = argv[1]
+    teryt_terc = argv[1]
     try:
         csv_filename, local_system_url = download_emapa_csv(
-            teryr_terc,
+            teryt_terc,
             OUTPUT_DIR
         )
     except TerytNotFound:
-        logging.error(f'Teryt {teryr_terc} not found at GUGiK website!')
+        logging.error(f'Teryt {teryt_terc} not found at GUGiK website!')
         sys.exit(1)
     except EmapaServiceNotFound:
-        logging.error(f'Not found e-mapa service for teryt: {teryr_terc}')
+        logging.error(f'Not found e-mapa service for teryt: {teryt_terc}')
         sys.exit(2)
     except IOError as e:
         logging.error(f'Error with downloading/saving data: {e}')
@@ -51,7 +51,7 @@ def main():
 
     replace_streets_with_osm_names(emapa_addresess)
 
-    osm_data: Optional[Dict[str, Any]] = download_osm_data()
+    osm_data: Optional[Dict[str, Any]] = download_osm_data(teryt_terc)
     elements: List[Dict[str, Any]] = list(
         filter(is_element, osm_data['elements'])
     )
