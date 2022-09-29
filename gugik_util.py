@@ -82,6 +82,7 @@ def download_emapa_csv(teryt_terc: str, output_dir: str) -> Tuple[str, str]:
 
     Download emapa csv file with addresses from GUGiK site
     """
+    logging.info("Downloading emapa csv data...")
     response = requests.get(EMAPA_ADDRESSES_URL)
     csv_uri, local_system_url = _parse_response(teryt_terc, response.text)
 

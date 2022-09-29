@@ -23,7 +23,7 @@ def download_osm_data(teryt_terc: str) -> Optional[Dict[Any, Any]]:
         query = f.read().strip().replace('<teryt_terc>', teryt_terc)
 
     logging.info(f'Read overpass query from file: {QUERY_FILE}')
-    logging.info(f'Downloading overpass data...')
+    logging.info(f'Downloading overpass data for {teryt_terc} area...')
 
     for _ in range(RETRIES):
         try:
