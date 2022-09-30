@@ -7,10 +7,11 @@ from sys import argv
 from typing import Any, Dict, List, Optional, Tuple
 
 from address import Address, OsmAddress
-from address_parser import (
-    parse_file,
+from parsers import (
     addresses_to_geojson,
-    parse_from_osm_element
+    parse_emapa_file,
+    parse_from_osm_element,
+    parse_teryt_terc_file
 )
 from analyze import (
     addr_type_distribution,
@@ -25,10 +26,18 @@ from gugik_util import download_emapa_csv
 
 
 OUTPUT_DIR = 'out'
+TERYT_TERC_FILE = path.join('data', 'terc.csv')
 
 
 def main():
     teryt_terc = argv[1]
+    try:
+        area_name = parse_teryt_terc_file(TERYT_TERC_FILE, teryt_terc)
+        logging.info(f'Parsed teryt_terc: {teryt_terc} as: {area_name}')
+    except (ValueError, IOError):
+        logging.error('Cannot parse teryt terc parameter!')
+        sys.exit(1)
+
     try:
         csv_filename, local_system_url = download_emapa_csv(
             teryt_terc,
@@ -36,15 +45,18 @@ def main():
         )
     except TerytNotFound:
         logging.error(f'Teryt {teryt_terc} not found at GUGiK website!')
-        sys.exit(1)
+        sys.exit(2)
     except EmapaServiceNotFound:
         logging.error(f'Not found e-mapa service for teryt: {teryt_terc}')
-        sys.exit(2)
+        sys.exit(3)
     except IOError as e:
         logging.error(f'Error with downloading/saving data: {e}')
-        sys.exit(3)
+        sys.exit(4)
 
-    emapa_addresess: List[Address] = parse_file(csv_filename, local_system_url)
+    emapa_addresess: List[Address] = parse_emapa_file(
+        csv_filename,
+        local_system_url
+    )
     for addr in emapa_addresess:
         addr.source_addr = local_system_url
     logging.info(f'Parsed {len(emapa_addresess)} emapa addresses.')

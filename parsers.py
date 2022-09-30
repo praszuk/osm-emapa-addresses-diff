@@ -6,7 +6,7 @@ from typing import Any, Dict, List, Optional
 from address import Address, OsmAddress, OsmType, Point
 
 
-def parse_csv_row(row, address_source: str) -> Optional[Address]:
+def parse_csv_address_row(row, address_source: str) -> Optional[Address]:
     """
     :param row: csv row
     :param address_source: source of dataset (local map system url)
@@ -32,7 +32,7 @@ def parse_csv_row(row, address_source: str) -> Optional[Address]:
         return None
 
 
-def parse_file(input_filename: str, source: str) -> List[Address]:
+def parse_emapa_file(input_filename: str, source: str) -> List[Address]:
     """
     :param input_filename: csv file with addresses data
     :param source: URL to local map system from above file is downloaded
@@ -45,11 +45,33 @@ def parse_file(input_filename: str, source: str) -> List[Address]:
         row_counter = 0
         for row in reader:
             row_counter += 1
-            new_addr = parse_csv_row(row, source)
+            new_addr = parse_csv_address_row(row, source)
             if new_addr:
                 addresses.append(new_addr)
 
     return addresses
+
+
+def parse_teryt_terc_file(input_filename: str, teryt_terc: str) -> str:
+    """
+    Validates teryt_terc id if it is correct and if it is commune (gmina)
+    from govenment dataset: https://eteryt.stat.gov.pl/
+
+    :param input_filename: csv file with teryt terc ids
+    :param teryt_terc: commune (gmina) id number
+    :raises ValueError: if teryt_terc not found/not allowed
+    :return: area name assigned to given teryt from government csv file
+
+    """
+    with open(input_filename, 'r', encoding='utf-8-sig') as csv_file:
+        reader = csv.DictReader(csv_file, delimiter=';')
+
+        for row in reader:
+            terc = ''.join([row['WOJ'], row['POW'], row['GMI'], row['RODZ']])
+            if terc == teryt_terc:
+                return row['NAZWA']
+
+    raise ValueError('Incorrect teryt_terc!')
 
 
 def parse_from_osm_element(element: Dict[str, Any]) -> OsmAddress:
