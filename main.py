@@ -6,27 +6,24 @@ from os import path
 from sys import argv
 from typing import Any, Dict, List, Optional, Tuple
 
-from address import Address, OsmAddress
-from parsers import (
-    addresses_to_geojson,
-    parse_emapa_file,
-    parse_from_osm_element,
-    parse_teryt_terc_file
-)
 from analyze import (
     addr_type_distribution,
     addr_tags_distribution,
     addr_duplicates,
     addr_missing
 )
+from address import Address, OsmAddress
+from parsers.emapa import parse_emapa_file
+from parsers.teryt import parse_teryt_terc_file
 from exceptions import TerytNotFound, EmapaServiceNotFound
-from overpass import download_osm_data, is_element
-from preprocessing import replace_streets_with_osm_names
-from gugik_util import download_emapa_csv
+from utils.emapa_downloader import download_emapa_csv
+from utils.overpass import download_osm_data, is_element
+from config import ROOT_DIR
+from utils.street_names_mappings import replace_streets_with_osm_names
 
 
-OUTPUT_DIR = 'out'
-TERYT_TERC_FILE = path.join('data', 'terc.csv')
+OUTPUT_DIR: str = path.join(ROOT_DIR, 'out')
+TERYT_TERC_FILE: str = path.join(ROOT_DIR, 'data', 'terc.csv')
 
 
 def main():
@@ -70,7 +67,7 @@ def main():
 
     logging.debug(f'Downloaded {len(elements)} OSM elements.')
     osm_addresses: List[OsmAddress] = list(
-        map(parse_from_osm_element, elements)
+        map(OsmAddress.parse_from_osm_element, elements)
     )
     total_osm_addr = len(osm_addresses)
     logging.info(f'Parsed {total_osm_addr} OSM addresses.')
@@ -94,12 +91,14 @@ def main():
     missing_emapa_addresses = addr_missing(osm_addresses, emapa_addresess)
     print(f'Missing emapa addresses: {len(missing_emapa_addresses)}')
 
-    geojson: Dict[str, Any] = addresses_to_geojson(missing_emapa_addresses)
+    geojson: Dict[str, Any] = Address.addresses_to_geojson(
+        missing_emapa_addresses
+    )
     filename = f'emapa_addresses_{area_name}_missing.geojson'
     with open(path.join(OUTPUT_DIR, filename), 'w') as f:
         json.dump(geojson, f, indent=4)
 
-    geojson: Dict[str, Any] = addresses_to_geojson(emapa_addresess)
+    geojson: Dict[str, Any] = Address.addresses_to_geojson(emapa_addresess)
     filename = f'emapa_addresses_{area_name}_all.geojson'
     with open(path.join(OUTPUT_DIR, filename), 'w') as f:
         json.dump(geojson, f, indent=4)

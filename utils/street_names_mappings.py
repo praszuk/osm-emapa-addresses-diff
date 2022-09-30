@@ -5,9 +5,13 @@ from os import path
 from typing import Dict, List
 
 from address import Address
+from config import ROOT_DIR
 
-
-STREET_NAMES_MAPPING_FILE = path.join('data', 'street_names_mappings.csv')
+STREET_NAMES_MAPPING_FILE = path.join(
+    ROOT_DIR,
+    'data',
+    'street_names_mappings.csv'
+)
 
 
 # TODO add update check from github

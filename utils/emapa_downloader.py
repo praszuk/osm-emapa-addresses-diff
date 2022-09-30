@@ -7,6 +7,7 @@ from lxml import etree
 
 from exceptions import TerytNotFound, EmapaServiceNotFound
 
+
 EMAPA_ADDRESSES_URL = 'https://integracja.gugik.gov.pl/daneadresowe/'
 COLUMN_LEN = 7
 
@@ -43,7 +44,6 @@ def _parse_response(
          col[5]: CSV URI
          col[6]: Local map system to display addresses URL
         """
-        #
         assert len(col_elements) == COLUMN_LEN
         _, elem_teryt, _, _, _, elem_csv, elem_system_url = col_elements
 

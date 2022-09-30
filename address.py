@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from enum import Enum
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List
 
 
 class OsmType(Enum):
@@ -43,9 +45,49 @@ class Address:
 
         return addr
 
+    @staticmethod
+    def addresses_to_geojson(addresses: List[Address]) -> Dict[str, Any]:
+        geojson = {
+            'type': 'FeatureCollection',
+            'features': []
+        }
+        for addr in addresses:
+            geojson['features'].append({
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [addr.point.lon, addr.point.lat],
+                },
+                'properties': addr.to_osm_tags()
+            })
+
+        return geojson
+
 
 @dataclass
 class OsmAddress(Address):
     osm_id: int
     osm_type: OsmType
     all_obj_tags: Dict[str, Any]
+
+    @staticmethod
+    def parse_from_osm_element(element: Dict[str, Any]) -> OsmAddress:
+        osm_type = OsmType(element['type'])
+
+        if osm_type == OsmType.NODE:
+            point = Point(element['lat'], element['lon'])
+        else:
+            point = Point(element['center']['lat'], element['center']['lon'])
+
+        return OsmAddress(
+            osm_id=element['id'],
+            osm_type=osm_type,
+            point=point,
+            city=element['tags'].get('addr:city', None),
+            city_simc=element['tags'].get('addr:city:simc', None),
+            street=element['tags'].get('addr:street', None),
+            housenumber=element['tags'].get('addr:housenumber', None),
+            postcode=element['tags'].get('addr:postcode', None),
+            source=element['tags'].get('source:addr', None),
+            all_obj_tags=element['tags']
+        )
