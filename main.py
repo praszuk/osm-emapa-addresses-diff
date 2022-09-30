@@ -33,7 +33,7 @@ def main():
     teryt_terc = argv[1]
     try:
         area_name = parse_teryt_terc_file(TERYT_TERC_FILE, teryt_terc)
-        logging.info(f'Parsed teryt_terc: {teryt_terc} as: {area_name}')
+        logging.info(f'Parsed teryt_terc ({teryt_terc}) as: {area_name}')
     except (ValueError, IOError):
         logging.error('Cannot parse teryt terc parameter!')
         sys.exit(1)
@@ -92,14 +92,16 @@ def main():
     )
 
     missing_emapa_addresses = addr_missing(osm_addresses, emapa_addresess)
-    print(f'**Missing emapa addresses: {len(missing_emapa_addresses)}')
+    print(f'Missing emapa addresses: {len(missing_emapa_addresses)}')
 
     geojson: Dict[str, Any] = addresses_to_geojson(missing_emapa_addresses)
-    with open(path.join(OUTPUT_DIR, 'missing_addresses.geojson'), 'w') as f:
+    filename = f'emapa_addresses_{area_name}_missing.geojson'
+    with open(path.join(OUTPUT_DIR, filename), 'w') as f:
         json.dump(geojson, f, indent=4)
 
     geojson: Dict[str, Any] = addresses_to_geojson(emapa_addresess)
-    with open(path.join(OUTPUT_DIR, 'all_addresses.geojson'), 'w') as f:
+    filename = f'emapa_addresses_{area_name}_all.geojson'
+    with open(path.join(OUTPUT_DIR, filename), 'w') as f:
         json.dump(geojson, f, indent=4)
 
 
