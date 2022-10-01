@@ -47,27 +47,20 @@ def addr_duplicates(osm_addresses: List[OsmAddress]) -> List[List[OsmAddress]]:
 
 
 def addr_missing(
-    osm_addresses: List[OsmAddress],
-    emapa_addresess: List[Address]
+    addresses1: List[Address],
+    addresses2: List[Address]
 ) -> List[Address]:
     """
-    :return: missing addresses in the OSM from emapa_addresses
+    :return: diff between datasets
+        it returns missing addresses in addresses1 from adddress2
     """
-    all_osm_min_addr: Set[str] = set()
-    for osm_addr in osm_addresses:
-        osm_min_addr = f'{osm_addr.city}' \
-            f'{osm_addr.street if osm_addr.street else ""}' \
-            f'{osm_addr.housenumber}'
-
-        all_osm_min_addr.add(osm_min_addr)
+    all_min_unique_addr1: Set[str] = set()
+    for addr1 in addresses1:
+        all_min_unique_addr1.add(addr1.min_unique)
 
     missing_addresses = []
-    for emapa_addr in emapa_addresess:
-        emapa_min_addr = f'{emapa_addr.city}' \
-            f'{emapa_addr.street if emapa_addr.street else ""}' \
-            f'{emapa_addr.housenumber}'
-
-        if emapa_min_addr not in all_osm_min_addr:
-            missing_addresses.append(emapa_addr)
+    for addr2 in addresses2:
+        if addr2.min_unique not in all_min_unique_addr1:
+            missing_addresses.append(addr2)
 
     return missing_addresses

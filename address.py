@@ -28,6 +28,16 @@ class Address:
     street: str  # if no street then None or empty str
     source: str
 
+    @property
+    def min_unique(self) -> str:
+        """
+        :return: minimal unique string for each address which contains
+            city, street (optionally), housenumber
+        """
+        return f'{self.city}' \
+            f'{self.street if self.street else ""}' \
+            f'{self.housenumber}'
+
     def to_osm_tags(self) -> Dict[str, str]:
         addr = {}
 
