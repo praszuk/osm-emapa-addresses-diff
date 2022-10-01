@@ -106,7 +106,7 @@ def main():
         osm_addresses
     )
     print(
-        f'Excess OSM addresses which does not exist in the emapa: '
+        f'Excess OSM addresses which do not exist in the emapa: '
         f'{len(excess_osm_addresses)}'
     )
     assert type(excess_osm_addresses[0]) == OsmAddress
