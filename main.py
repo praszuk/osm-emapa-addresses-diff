@@ -89,7 +89,10 @@ def main():
     )
 
     missing_emapa_addresses = addr_missing(osm_addresses, emapa_addresess)
-    print(f'Missing emapa addresses: {len(missing_emapa_addresses)}')
+    print(
+        f'Missing OSM addresses which exist in the emapa: '
+        f'{len(missing_emapa_addresses)}'
+    )
 
     geojson: Dict[str, Any] = Address.addresses_to_geojson(
         missing_emapa_addresses
@@ -97,6 +100,27 @@ def main():
     filename = f'emapa_addresses_{area_name}_missing.geojson'
     with open(path.join(OUTPUT_DIR, filename), 'w') as f:
         json.dump(geojson, f, indent=4)
+
+    excess_osm_addresses: List[OsmAddress] = addr_missing(
+        emapa_addresess,
+        osm_addresses
+    )
+    print(
+        f'Excess OSM addresses which does not exist in the emapa: '
+        f'{len(excess_osm_addresses)}'
+    )
+    assert type(excess_osm_addresses[0]) == OsmAddress
+
+    shorten_osm_obj_sequence = ','.join([
+        addr.shorten_osm_obj for addr in excess_osm_addresses
+    ])
+    filename = f'osm_addresses_{area_name}_excess.txt'
+    with open(path.join(OUTPUT_DIR, filename), 'w') as f:
+        f.write(
+            '# You can load it in the JOSM '
+            'using "Download object" function (CTRL + SHIFT + O).\n'
+        )
+        f.write(shorten_osm_obj_sequence)
 
     geojson: Dict[str, Any] = Address.addresses_to_geojson(emapa_addresess)
     filename = f'emapa_addresses_{area_name}_all.geojson'

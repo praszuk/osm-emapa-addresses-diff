@@ -80,6 +80,19 @@ class OsmAddress(Address):
     osm_type: OsmType
     all_obj_tags: Dict[str, Any]
 
+    @property
+    def shorten_osm_obj(self) -> str:
+        """
+        :return: shorten object identifier which can be load in the JOSM
+            node – n, way – w, relation – r
+            example: n123
+        """
+        return {
+            OsmType.NODE: 'n',
+            OsmType.WAY: 'w',
+            OsmType.RELATION: 'r'
+        }[self.osm_type] + str(self.osm_id)
+
     @staticmethod
     def parse_from_osm_element(element: Dict[str, Any]) -> OsmAddress:
         osm_type = OsmType(element['type'])

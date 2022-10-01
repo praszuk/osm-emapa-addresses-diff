@@ -1,5 +1,5 @@
 from collections import Counter
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Union
 
 from address import Address, OsmAddress
 
@@ -48,8 +48,8 @@ def addr_duplicates(osm_addresses: List[OsmAddress]) -> List[List[OsmAddress]]:
 
 def addr_missing(
     addresses1: List[Address],
-    addresses2: List[Address]
-) -> List[Address]:
+    addresses2: List[Address],
+) -> List[Union[Address, OsmAddress]]:
     """
     :return: diff between datasets
         it returns missing addresses in addresses1 from adddress2
