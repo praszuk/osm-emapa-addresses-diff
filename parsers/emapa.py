@@ -14,10 +14,11 @@ def _parse_csv_address_row(row, address_source: str) -> Optional[Address]:
     try:
         raw_postcode = row['AdresCSIOZ'].split('|')[0].strip()
         postcode = raw_postcode[:2] + '-' + raw_postcode[2:]
+        raw_street = row['Nazwa ulicy'].strip()
         return Address(
             city=row['Nazwa miejscowości'].strip(),
             city_simc=row['SIMC'].strip(),
-            street=row['Nazwa ulicy'].strip(),
+            street=raw_street if raw_street else None,
             housenumber=row['Numer'].strip(),
             postcode=postcode,
             point=Point(

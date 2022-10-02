@@ -102,11 +102,16 @@ class OsmAddress(Address):
         else:
             point = Point(element['center']['lat'], element['center']['lon'])
 
+        if 'addr:street' in element['tags']:
+            city = element['tags'].get('addr:city', None)
+        else:
+            city = element['tags'].get('addr:place', None)
+
         return OsmAddress(
             osm_id=element['id'],
             osm_type=osm_type,
             point=point,
-            city=element['tags'].get('addr:city', None),
+            city=city,
             city_simc=element['tags'].get('addr:city:simc', None),
             street=element['tags'].get('addr:street', None),
             housenumber=element['tags'].get('addr:housenumber', None),
