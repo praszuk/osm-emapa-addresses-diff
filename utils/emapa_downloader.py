@@ -73,12 +73,12 @@ def _parse_response(
     return matched_csv_uri, matched_local_system_url
 
 
-def download_emapa_csv(teryt_terc: str, output_dir: str) -> Tuple[str, str]:
+def download_emapa_csv(teryt_terc: str, csv_filename: str) -> str:
     """
     :param teryt_terc: commune (gmina) id number
-    :param output_dir: directory to save emapa csv file
+    :param csv_filename: filepath to save csv file
     :raises TerytNotFound, EmapaSeriveNotFound, IOError:
-    :return: filepath (including output_dir) and local system url (e-mapa)
+    :return: local system url (e-mapa)
 
     Download emapa csv file with addresses from GUGiK site
     """
@@ -89,10 +89,9 @@ def download_emapa_csv(teryt_terc: str, output_dir: str) -> Tuple[str, str]:
     if 'e-mapa' not in local_system_url:
         raise EmapaServiceNotFound()
 
-    csv_filename = path.join(output_dir, local_system_url + '.csv')
     with open(csv_filename, 'wb') as f:
         r = requests.get(csv_uri)
         f.write(r.content)
 
-    return csv_filename, local_system_url
+    return local_system_url
     
