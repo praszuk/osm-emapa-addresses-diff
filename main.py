@@ -173,7 +173,7 @@ def main():
 
     missing_emapa_addresses = addr_missing(osm_addresses, emapa_addresses)
     print(
-        'Missing OSM addresses which exist in the emapa: ',
+        'Missing OSM addresses which exist in the emapa:',
         len(missing_emapa_addresses)
     )
     excess_osm_addresses: List[OsmAddress] = addr_missing(
@@ -181,7 +181,7 @@ def main():
         osm_addresses
     )
     print(
-        'Excess OSM addresses which do not exist in the emapa: ',
+        'Excess OSM addresses which do not exist in the emapa:',
         len(excess_osm_addresses)
     )
 
