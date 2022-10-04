@@ -2,6 +2,7 @@
 !.gitignore
 __pycache__/
 out/**
+*.pot
 
 !.gitkeep
 
