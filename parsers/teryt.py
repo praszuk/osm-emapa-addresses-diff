@@ -1,5 +1,7 @@
 import csv
 
+from config import gettext as _
+
 
 def parse_teryt_terc_file(input_filename: str, teryt_terc: str) -> str:
     """
@@ -20,4 +22,4 @@ def parse_teryt_terc_file(input_filename: str, teryt_terc: str) -> str:
             if terc == teryt_terc:
                 return row['NAZWA']
 
-    raise ValueError('Incorrect teryt_terc!')
+    raise ValueError(_('Incorrect teryt_terc!'))

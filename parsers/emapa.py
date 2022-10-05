@@ -1,8 +1,10 @@
 import csv
 import logging
+
 from typing import Optional, List
 
 from address import Address, Point
+from config import gettext as _
 
 
 def _parse_csv_address_row(row, address_source: str) -> Optional[Address]:
@@ -28,7 +30,7 @@ def _parse_csv_address_row(row, address_source: str) -> Optional[Address]:
             source=address_source
         )
     except KeyError:
-        logging.warning(f'Couldn\'t parse row: {row}')
+        logging.warning(_('Couldn\'t parse row: {}').format(row))
         return None
 
 

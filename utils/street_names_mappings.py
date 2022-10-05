@@ -5,7 +5,8 @@ from os import path
 from typing import Dict, List
 
 from address import Address
-from config import ROOT_DIR
+from config import ROOT_DIR, gettext as _
+
 
 STREET_NAMES_MAPPING_FILE = path.join(
     ROOT_DIR,
@@ -73,6 +74,8 @@ def replace_streets_with_osm_names(emapa_addresses: List[Address]) -> None:
         matched_streets.add(new_street_name)
 
     logging.info(
-        f'Matched and replaced {len(matched_streets)} streets'
-        ' to existing OSM street names'
+        _(
+            'Matched and replaced {} '
+            'streets to existing OSM street names'
+        ).format(len(matched_streets))
     )

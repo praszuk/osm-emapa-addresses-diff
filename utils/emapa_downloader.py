@@ -1,11 +1,11 @@
 import logging
 import requests
 
-from os import path
 from typing import Optional, Tuple
 from lxml import etree
 
-from exceptions import TerytNotFound, EmapaServiceNotFound
+from config import gettext as _
+from exceptions import EmapaServiceNotFound, TerytNotFound
 
 
 EMAPA_ADDRESSES_URL = 'https://integracja.gugik.gov.pl/daneadresowe/'
@@ -45,7 +45,7 @@ def _parse_response(
          col[6]: Local map system to display addresses URL
         """
         assert len(col_elements) == COLUMN_LEN
-        _, elem_teryt, _, _, _, elem_csv, elem_system_url = col_elements
+        _e, elem_teryt, _e, _e, _e, elem_csv, elem_system_url = col_elements
 
         c_teryt = elem_teryt.text
         c_csv = next(iter(elem_csv.xpath('.//a/@href')), None)
@@ -55,7 +55,7 @@ def _parse_response(
         )
 
         if c_teryt == teryt:
-            logging.debug('Parsed columns: {} {} {}'.format(
+            logging.debug(_('Parsed columns: {} {} {}').format(
                 c_teryt, c_csv, c_local_system_url
             ))
             logging.debug('Raw: {} {} {}'.format(
@@ -80,9 +80,9 @@ def download_emapa_csv(teryt_terc: str, csv_filename: str) -> str:
     :raises TerytNotFound, EmapaSeriveNotFound, IOError:
     :return: local system url (e-mapa)
 
-    Download emapa csv file with addresses from GUGiK site
+    Download e-mapa csv file with addresses from GUGiK site
     """
-    logging.info("Downloading emapa csv data...")
+    logging.info(_('Downloading e-mapa csv data...'))
     response = requests.get(EMAPA_ADDRESSES_URL)
     csv_uri, local_system_url = _parse_response(teryt_terc, response.text)
 

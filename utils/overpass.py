@@ -5,7 +5,8 @@ from os import path
 from time import sleep
 from typing import Any, Dict, Optional
 
-from config import ROOT_DIR
+from config import ROOT_DIR, gettext as _
+
 
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
 QUERY_FILE = path.join(ROOT_DIR, 'utils', 'query.overpassql')
@@ -24,23 +25,29 @@ def download_osm_data(teryt_terc: str) -> Optional[Dict[Any, Any]]:
         query = f.read().strip().replace('<teryt_terc>', teryt_terc)
 
     logging.info(
-        f'Read overpass query from file: {path.split(QUERY_FILE)[-1]}'
+        _('Loaded Overpass query from file: {}').format(
+            path.split(QUERY_FILE)[-1]
+        )
     )
-    logging.info(f'Downloading overpass data for {teryt_terc} area...')
+    logging.info(
+        _('Downloading Overpass data for {} area...').format(teryt_terc)
+    )
 
-    for _ in range(RETRIES):
+    for _retry in range(RETRIES):
         try:
             response = requests.get(OVERPASS_API_URL, params={'data': query})
             if response.status_code != 200:
                 logging.warning(
-                    f'Incorrect status code: {response.status_code}'
+                    _('Incorrect status code: {}').format(response.status_code)
                 )
                 continue
 
             return response.json()
 
         except Exception as e:
-            logging.error(f'Error with downloading/parsing data: {e}')
+            logging.error(
+                _('Error with downloading/parsing data: {}').format(e)
+            )
 
         sleep(TIMEOUT)
 
