@@ -120,6 +120,29 @@ def save_missing_addresses(
         json.dump(geojson, f, indent=4)
 
 
+def save_duplicated_addresses(
+    duplicated_osm_addresses: List[List[OsmAddress]],
+    teryt_terc: str
+) -> None:
+    assert type(duplicated_osm_addresses[0][0]) == OsmAddress
+
+    filename = 'osm_addresses_duplicates.txt'
+    with open(path.join(OUTPUT_DIR, teryt_terc, filename), 'w') as f:
+        f.write(
+            '# ' + _(
+                'You can load it in the JOSM '
+                'using "Download object" function (CTRL + SHIFT + O).'
+            )
+        )
+        f.write('\n# ' + _('Each line is for 1 address '))
+
+        for duplication_block in duplicated_osm_addresses:
+            shorten_osm_obj_sequence = ','.join([
+                addr.shorten_osm_obj for addr in duplication_block
+            ])
+            f.write('\n' + shorten_osm_obj_sequence)
+
+
 def save_excess_addresses(
     excess_osm_addresses: List[OsmAddress],
     teryt_terc: str
@@ -132,12 +155,12 @@ def save_excess_addresses(
     filename = 'osm_addresses_excess.txt'
     with open(path.join(OUTPUT_DIR, teryt_terc, filename), 'w') as f:
         f.write(
-            _(
-                '# You can load it in the JOSM '
+            '# ' + _(
+                'You can load it in the JOSM '
                 'using "Download object" function (CTRL + SHIFT + O).'
-            ) + '\n'
+            )
         )
-        f.write(shorten_osm_obj_sequence)
+        f.write('\n' + shorten_osm_obj_sequence)
 
 
 def save_all_emapa_addresses(
@@ -177,8 +200,11 @@ def main():
     print(report_osm_type(osm_addresses), end='\n\n')
     print(report_key_value_distribution(osm_addresses), end='\n\n')
 
-    duplicated_addr = addr_duplicates(osm_addresses)
-    print(report_duplicates(duplicated_addr, osm_addresses), end='\n\n')
+    duplicated_osm_addresses = addr_duplicates(osm_addresses)
+    print(
+        report_duplicates(duplicated_osm_addresses, osm_addresses),
+        end='\n\n'
+    )
 
     missing_emapa_addresses = addr_missing(osm_addresses, emapa_addresses)
     print(_('Missing OSM addresses which exist in the e-mapa: {}').format(
@@ -196,6 +222,7 @@ def main():
     )
 
     # Save data to files
+    save_duplicated_addresses(duplicated_osm_addresses, teryt_terc)
     save_missing_addresses(missing_emapa_addresses, teryt_terc)
     save_excess_addresses(excess_osm_addresses, teryt_terc)
     save_all_emapa_addresses(emapa_addresses, teryt_terc)
