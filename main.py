@@ -134,7 +134,7 @@ def save_duplicated_addresses(
                 'using "Download object" function (CTRL + SHIFT + O).'
             )
         )
-        f.write('\n# ' + _('Each line is for 1 address '))
+        f.write('\n# ' + _('Each line is for 1 address'))
 
         for duplication_block in duplicated_osm_addresses:
             shorten_osm_obj_sequence = ','.join([
