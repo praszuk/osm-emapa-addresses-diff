@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: osm-emapa-addresses-diff\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-04 23:07+0200\n"
-"PO-Revision-Date: 2022-10-04 23:09+0200\n"
+"POT-Creation-Date: 2022-10-06 15:05+0200\n"
+"PO-Revision-Date: 2022-10-06 15:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -48,7 +48,7 @@ msgstr "Nieprawidłowy kod status: {}"
 msgid "Error with downloading/parsing data: {}"
 msgstr "Błąd pobierania/przetwarzania danych: {}"
 
-#: parsers/emapa.py:32
+#: parsers/emapa.py:33
 msgid "Couldn't parse row: {}"
 msgstr "Nie udało się przetworzyć wiersza: {}"
 
@@ -96,29 +96,33 @@ msgstr "Rozkład Klucz-Wartość:"
 msgid "Duplicated OSM addresses:"
 msgstr "Zduplikowane adresy OSM:"
 
-#: main.py:136
+#: main.py:133 main.py:159
 msgid ""
-"# You can load it in the JOSM using \"Download object\" function (CTRL + "
-"SHIFT + O)."
+"You can load it in the JOSM using \"Download object\" function (CTRL + SHIFT "
+"+ O)."
 msgstr ""
-"# Możesz załadować to do JOSMa używając funkcji \"Pobieranie obiektu\" (CTRL "
-"+ SHIFT + O)."
+"Możesz załadować to do JOSMa używając funkcji \"Pobieranie obiektu\" (CTRL + "
+"SHIFT + O)."
 
-#: main.py:159
+#: main.py:137
+msgid "Each line is for 1 address"
+msgstr "Na każdą linię przypada 1 adres"
+
+#: main.py:182
 msgid "Parsed teryt_terc ({}) as: {}"
 msgstr "Przetworzono teryt_terc ({}) jako: {}"
 
-#: main.py:162
+#: main.py:185
 msgid "Cannot parse teryt terc parameter!"
 msgstr "Nie można przetworzyć parametru teryt terc!"
 
-#: main.py:184
+#: main.py:210
 msgid "Missing OSM addresses which exist in the e-mapa: {}"
 msgstr "Brakujące adresy OSM, które istnieją w e-mapie: {}"
 
-#: main.py:192
+#: main.py:219
 msgid "Excess OSM addresses which do not exist in the e-mapa: {}"
-msgstr "Nadmiarowe adresy OSM które nie istnieją w e-mapie: {}"
+msgstr "Nadmiarowe adresy OSM, które nie istnieją w e-mapie: {}"
 
 #~ msgid ""
 #~ "\n"
