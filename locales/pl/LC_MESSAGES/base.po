@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: osm-emapa-addresses-diff\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-04 23:07+0200\n"
+"PO-Revision-Date: 2022-10-04 23:09+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: pl\n"
+"X-Poedit-SearchPath-1: base.pot\n"
+
+#: utils/emapa_downloader.py:58
+msgid "Parsed columns: {} {} {}"
+msgstr "Przetworzono kolumny: {} {} {}"
+
+#: utils/emapa_downloader.py:85
+msgid "Downloading e-mapa csv data..."
+msgstr "Pobieranie danych csv e-mapy..."
+
+#: utils/street_names_mappings.py:78
+msgid "Matched and replaced {} streets to existing OSM street names"
+msgstr "Dopasowano i zastąpiono {} ulic do istniejących nazw ulic z OSM"
+
+#: utils/overpass.py:28
+msgid "Loaded Overpass query from file: {}"
+msgstr "Załadowano zapytanie Overpass z pliku: {}"
+
+#: utils/overpass.py:33
+msgid "Downloading Overpass data for {} area..."
+msgstr "Pobieranie danych Overpass dla obszaru {}..."
+
+#: utils/overpass.py:41
+msgid "Incorrect status code: {}"
+msgstr "Nieprawidłowy kod status: {}"
+
+#: utils/overpass.py:49
+msgid "Error with downloading/parsing data: {}"
+msgstr "Błąd pobierania/przetwarzania danych: {}"
+
+#: parsers/emapa.py:32
+msgid "Couldn't parse row: {}"
+msgstr "Nie udało się przetworzyć wiersza: {}"
+
+#: parsers/teryt.py:25
+msgid "Incorrect teryt_terc!"
+msgstr "Niepoprawny teryt_terc!"
+
+#: main.py:41
+msgid "Teryt {} not found at GUGiK website!"
+msgstr "Nie znaleziono terytu {} na stronie GUGiKa!"
+
+#: main.py:46
+msgid "Not found e-mapa service for teryt: {}"
+msgstr "Nie znaleziono e-mapy dla podanego terytu: {}"
+
+#: main.py:50
+msgid "Error with downloading/saving data: {}"
+msgstr "Błąd podczas pobierania/zapisu danych: {}"
+
+#: main.py:60
+msgid "Parsed {} e-mapa addresses."
+msgstr "Przetworzono {} adresów z e-mapy."
+
+#: main.py:67
+msgid "Error with downloading OSM (Overpass) data."
+msgstr "Błąd pobierania danych OSM (Overpass)."
+
+#: main.py:74
+msgid "Downloaded {} OSM elements."
+msgstr "Pobrano {} elementów OSM."
+
+#: main.py:78
+msgid "Parsed {} OSM addresses."
+msgstr "Przetworzono {} adresów OSM."
+
+#: main.py:85
+msgid "OSM object type:"
+msgstr "Typ obiektu OSM:"
+
+#: main.py:92
+msgid "Key-values distribution:"
+msgstr "Rozkład Klucz-Wartość:"
+
+#: main.py:104
+msgid "Duplicated OSM addresses:"
+msgstr "Zduplikowane adresy OSM:"
+
+#: main.py:136
+msgid ""
+"# You can load it in the JOSM using \"Download object\" function (CTRL + "
+"SHIFT + O)."
+msgstr ""
+"# Możesz załadować to do JOSMa używając funkcji \"Pobieranie obiektu\" (CTRL "
+"+ SHIFT + O)."
+
+#: main.py:159
+msgid "Parsed teryt_terc ({}) as: {}"
+msgstr "Przetworzono teryt_terc ({}) jako: {}"
+
+#: main.py:162
+msgid "Cannot parse teryt terc parameter!"
+msgstr "Nie można przetworzyć parametru teryt terc!"
+
+#: main.py:184
+msgid "Missing OSM addresses which exist in the e-mapa: {}"
+msgstr "Brakujące adresy OSM, które istnieją w e-mapie: {}"
+
+#: main.py:192
+msgid "Excess OSM addresses which do not exist in the e-mapa: {}"
+msgstr "Nadmiarowe adresy OSM które nie istnieją w e-mapie: {}"
+
+#~ msgid ""
+#~ "\n"
+#~ "Osm Type: \n"
+#~ "{}"
+#~ msgstr "Typ OSM: {}"
