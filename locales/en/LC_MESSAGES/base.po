@@ -1,0 +1,116 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-04 23:12+0200\n"
+"PO-Revision-Date: 2022-10-04 23:33+0200\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: utils/emapa_downloader.py:58
+msgid "Parsed columns: {} {} {}"
+msgstr ""
+
+#: utils/emapa_downloader.py:85
+msgid "Downloading e-mapa csv data..."
+msgstr ""
+
+#: utils/street_names_mappings.py:78
+msgid "Matched and replaced {} streets to existing OSM street names"
+msgstr ""
+
+#: utils/overpass.py:28
+msgid "Loaded Overpass query from file: {}"
+msgstr ""
+
+#: utils/overpass.py:33
+msgid "Downloading Overpass data for {} area..."
+msgstr ""
+
+#: utils/overpass.py:41
+msgid "Incorrect status code: {}"
+msgstr ""
+
+#: utils/overpass.py:49
+msgid "Error with downloading/parsing data: {}"
+msgstr ""
+
+#: parsers/emapa.py:32
+msgid "Couldn't parse row: {}"
+msgstr ""
+
+#: parsers/teryt.py:25
+msgid "Incorrect teryt_terc!"
+msgstr ""
+
+#: main.py:41
+msgid "Teryt {} not found at GUGiK website!"
+msgstr ""
+
+#: main.py:46
+msgid "Not found e-mapa service for teryt: {}"
+msgstr ""
+
+#: main.py:50
+msgid "Error with downloading/saving data: {}"
+msgstr ""
+
+#: main.py:60
+msgid "Parsed {} e-mapa addresses."
+msgstr ""
+
+#: main.py:67
+msgid "Error with downloading OSM (Overpass) data."
+msgstr ""
+
+#: main.py:74
+msgid "Downloaded {} OSM elements."
+msgstr ""
+
+#: main.py:78
+msgid "Parsed {} OSM addresses."
+msgstr ""
+
+#: main.py:85
+msgid "OSM object type:"
+msgstr ""
+
+#: main.py:92
+msgid "Key-values distribution:"
+msgstr ""
+
+#: main.py:104
+msgid "Duplicated OSM addresses:"
+msgstr ""
+
+#: main.py:136
+msgid ""
+"# You can load it in the JOSM using \"Download object\" function (CTRL + "
+"SHIFT + O)."
+msgstr ""
+
+#: main.py:159
+msgid "Parsed teryt_terc ({}) as: {}"
+msgstr ""
+
+#: main.py:162
+msgid "Cannot parse teryt terc parameter!"
+msgstr ""
+
+#: main.py:184
+msgid "Missing OSM addresses which exist in the e-mapa: {}"
+msgstr ""
+
+#: main.py:193
+msgid "Excess OSM addresses which do not exist in the e-mapa: {}"
+msgstr ""
