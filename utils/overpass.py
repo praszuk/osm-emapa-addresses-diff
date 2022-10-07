@@ -5,11 +5,12 @@ from os import path
 from time import sleep
 from typing import Any, Dict, Optional
 
-from config import ROOT_DIR, gettext as _
+from config import Config
 
 
+_ = Config.gettext
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
-QUERY_FILE = path.join(ROOT_DIR, 'utils', 'query.overpassql')
+QUERY_FILE = path.join(Config.ROOT_DIR, 'utils', 'query.overpassql')
 
 TIMEOUT = 30  # seconds
 RETRIES = 5

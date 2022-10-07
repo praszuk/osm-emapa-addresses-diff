@@ -5,11 +5,11 @@ from os import path
 from typing import Dict, List
 
 from address import Address
-from config import ROOT_DIR, gettext as _
+from config import Config
 
-
+_ = Config.gettext
 STREET_NAMES_MAPPING_FILE = path.join(
-    ROOT_DIR,
+    Config.ROOT_DIR,
     'data',
     'street_names_mappings.csv'
 )

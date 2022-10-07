@@ -14,40 +14,38 @@ from analyze import (
     addr_missing
 )
 from address import Address, OsmAddress
+from config import Config
 from parsers.emapa import parse_emapa_file
 from parsers.teryt import parse_teryt_terc_file
 from exceptions import TerytNotFound, EmapaServiceNotFound
 from utils.emapa_downloader import download_emapa_csv
 from utils.overpass import download_osm_data, is_element
-from config import ROOT_DIR, gettext as _
 from utils.street_names_mappings import replace_streets_with_osm_names
 
 
-OUTPUT_DIR: str = path.join(ROOT_DIR, 'out')
-TERYT_TERC_FILE: str = path.join(ROOT_DIR, 'data', 'terc.csv')
+_ = Config.gettext
+TERYT_TERC_FILE: str = path.join(Config.ROOT_DIR, 'data', 'terc.csv')
 
 
-def download_emapa_addresses(teryt_terc: str) -> List[Address]:
+def download_emapa_addresses() -> List[Address]:
     try:
-        csv_filename = path.join(
-            OUTPUT_DIR,
-            teryt_terc,
-            'emapa_addresses_raw.csv'
-        )
-        local_system_url = download_emapa_csv(teryt_terc, csv_filename)
+        csv_filename = path.join(Config.OUTPUT_DIR, 'emapa_addresses_raw.csv')
+        local_system_url = download_emapa_csv(Config.TERYT_TERC, csv_filename)
 
     except TerytNotFound:
         logging.error(
-            _('Teryt {} not found at GUGiK website!').format(teryt_terc)
+            _('Teryt {} not found at GUGiK website!').format(Config.TERYT_TERC)
         )
         sys.exit(2)
     except EmapaServiceNotFound:
         logging.error(
-            _('Not found e-mapa service for teryt: {}').format(teryt_terc)
+            _('Not found e-mapa service for teryt: {}').format(
+                Config.TERYT_TERC
+            )
         )
         sys.exit(3)
-    except IOError as e:
-        logging.error(_('Error with downloading/saving data: {}').format(e))
+    except IOError as err:
+        logging.error(_('Error with downloading/saving data: {}').format(err))
         sys.exit(4)
 
     emapa_addresess: List[Address] = parse_emapa_file(
@@ -61,8 +59,8 @@ def download_emapa_addresses(teryt_terc: str) -> List[Address]:
     return emapa_addresess
 
 
-def download_osm_addresses(teryt_terc: str) -> List[OsmAddress]:
-    osm_data: Optional[Dict[str, Any]] = download_osm_data(teryt_terc)
+def download_osm_addresses() -> List[OsmAddress]:
+    osm_data: Optional[Dict[str, Any]] = download_osm_data(Config.TERYT_TERC)
     if osm_data is None:
         logging.error(_('Error with downloading OSM (Overpass) data.'))
         sys.exit(4)
@@ -108,26 +106,22 @@ def report_duplicates(
     )
 
 
-def save_missing_addresses(
-    missing_emapa_addresses: List[Address],
-    teryt_terc: str
-) -> None:
+def save_missing_addresses(missing_emapa_addresses: List[Address]) -> None:
     geojson: Dict[str, Any] = Address.addresses_to_geojson(
         missing_emapa_addresses
     )
     filename = 'emapa_addresses_missing.geojson'
-    with open(path.join(OUTPUT_DIR, teryt_terc, filename), 'w') as f:
+    with open(path.join(Config.OUTPUT_DIR, filename), 'w') as f:
         json.dump(geojson, f, indent=4)
 
 
 def save_duplicated_addresses(
-    duplicated_osm_addresses: List[List[OsmAddress]],
-    teryt_terc: str
+    duplicated_osm_addresses: List[List[OsmAddress]]
 ) -> None:
     assert type(duplicated_osm_addresses[0][0]) == OsmAddress
 
     filename = 'osm_addresses_duplicates.txt'
-    with open(path.join(OUTPUT_DIR, teryt_terc, filename), 'w') as f:
+    with open(path.join(Config.OUTPUT_DIR, filename), 'w') as f:
         f.write(
             '# ' + _(
                 'You can load it in the JOSM '
@@ -143,17 +137,14 @@ def save_duplicated_addresses(
             f.write('\n' + shorten_osm_obj_sequence)
 
 
-def save_excess_addresses(
-    excess_osm_addresses: List[OsmAddress],
-    teryt_terc: str
-) -> None:
+def save_excess_addresses(excess_osm_addresses: List[OsmAddress]) -> None:
     assert type(excess_osm_addresses[0]) == OsmAddress
 
     shorten_osm_obj_sequence = ','.join([
         addr.shorten_osm_obj for addr in excess_osm_addresses
     ])
     filename = 'osm_addresses_excess.txt'
-    with open(path.join(OUTPUT_DIR, teryt_terc, filename), 'w') as f:
+    with open(path.join(Config.OUTPUT_DIR, filename), 'w') as f:
         f.write(
             '# ' + _(
                 'You can load it in the JOSM '
@@ -163,37 +154,22 @@ def save_excess_addresses(
         f.write('\n' + shorten_osm_obj_sequence)
 
 
-def save_all_emapa_addresses(
-    emapa_addresses: List[Address],
-    teryt_terc: str
-) -> None:
+def save_all_emapa_addresses(emapa_addresses: List[Address]) -> None:
     geojson: Dict[str, Any] = Address.addresses_to_geojson(emapa_addresses)
+
     filename = 'emapa_addresses_all.geojson'
-    with open(path.join(OUTPUT_DIR, teryt_terc, filename), 'w') as f:
+    with open(path.join(Config.OUTPUT_DIR, filename), 'w') as f:
         json.dump(geojson, f, indent=4)
 
 
 def main():
-    # Parse and check teryt_terc
-    teryt_terc = argv[1]
-    try:
-        area_name = parse_teryt_terc_file(TERYT_TERC_FILE, teryt_terc)
-        logging.info(
-            _('Parsed teryt_terc ({}) as: {}').format(teryt_terc, area_name)
-        )
-    except (ValueError, IOError) as e:
-        logging.error(_('Cannot parse teryt terc parameter!') + f'\n{e}')
-        sys.exit(1)
-
     # Create teryt_terc output directory if not exists
-    pathlib.Path(path.join(OUTPUT_DIR, teryt_terc)).mkdir(
-        parents=True,
-        exist_ok=True
-    )
+    pathlib.Path(Config.OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
+
     # Download e-mapa and OSM adddresses
-    emapa_addresses: List[Address] = download_emapa_addresses(teryt_terc)
+    emapa_addresses: List[Address] = download_emapa_addresses()
     replace_streets_with_osm_names(emapa_addresses)
-    osm_addresses: List[OsmAddress] = download_osm_addresses(teryt_terc)
+    osm_addresses: List[OsmAddress] = download_osm_addresses()
 
     # Analysis reports
     print('\n')
@@ -222,10 +198,10 @@ def main():
     )
 
     # Save data to files
-    save_duplicated_addresses(duplicated_osm_addresses, teryt_terc)
-    save_missing_addresses(missing_emapa_addresses, teryt_terc)
-    save_excess_addresses(excess_osm_addresses, teryt_terc)
-    save_all_emapa_addresses(emapa_addresses, teryt_terc)
+    save_duplicated_addresses(duplicated_osm_addresses)
+    save_missing_addresses(missing_emapa_addresses)
+    save_excess_addresses(excess_osm_addresses)
+    save_all_emapa_addresses(emapa_addresses)
 
 
 if __name__ == '__main__':
@@ -234,4 +210,20 @@ if __name__ == '__main__':
         format='%(asctime)s - %(levelname)s - %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S'
     )
+
+    # Parse and check teryt_terc from user input
+    teryt_terc: str = argv[1]
+    try:
+        area_name = parse_teryt_terc_file(TERYT_TERC_FILE, teryt_terc)
+        logging.info(
+            _('Parsed teryt_terc ({}) as: {}').format(teryt_terc, area_name)
+        )
+    except (ValueError, IOError) as e:
+        logging.error(_('Cannot parse teryt terc parameter!') + f'\n{e}')
+        sys.exit(1)
+
+    Config.TERYT_TERC = teryt_terc
+    Config.AREA_NAME = area_name
+    Config.OUTPUT_DIR = path.join(Config.OUTPUT_BASE, teryt_terc)
+
     main()

@@ -1,6 +1,9 @@
 import csv
 
-from config import gettext as _
+from config import Config
+
+
+_ = Config.gettext
 
 
 def parse_teryt_terc_file(input_filename: str, teryt_terc: str) -> str:
