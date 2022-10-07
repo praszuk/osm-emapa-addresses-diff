@@ -15,6 +15,7 @@ from analyze import (
 )
 from address import Address, OsmAddress
 from config import Config
+from config import gettext as _
 from parsers.emapa import parse_emapa_file
 from parsers.teryt import parse_teryt_terc_file
 from exceptions import TerytNotFound, EmapaServiceNotFound
@@ -23,7 +24,6 @@ from utils.overpass import download_osm_data, is_element
 from utils.street_names_mappings import replace_streets_with_osm_names
 
 
-_ = Config.gettext
 TERYT_TERC_FILE: str = path.join(Config.ROOT_DIR, 'data', 'terc.csv')
 
 

@@ -6,8 +6,9 @@ from typing import Dict, List
 
 from address import Address
 from config import Config
+from config import gettext as _
 
-_ = Config.gettext
+
 STREET_NAMES_MAPPING_FILE = path.join(
     Config.ROOT_DIR,
     'data',

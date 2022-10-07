@@ -4,10 +4,7 @@ import logging
 from typing import Optional, List
 
 from address import Address, Point
-from config import Config
-
-
-_ = Config.gettext
+from config import gettext as _
 
 
 def _parse_csv_address_row(row, address_source: str) -> Optional[Address]:

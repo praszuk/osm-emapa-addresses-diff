@@ -6,9 +6,9 @@ from time import sleep
 from typing import Any, Dict, Optional
 
 from config import Config
+from config import gettext as _
 
 
-_ = Config.gettext
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
 QUERY_FILE = path.join(Config.ROOT_DIR, 'utils', 'query.overpassql')
 

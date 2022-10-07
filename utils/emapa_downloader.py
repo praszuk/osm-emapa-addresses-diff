@@ -4,11 +4,10 @@ import requests
 from typing import Optional, Tuple
 from lxml import etree
 
-from config import Config
+from config import gettext as _
 from exceptions import EmapaServiceNotFound, TerytNotFound
 
 
-_ = Config.gettext
 EMAPA_ADDRESSES_URL = 'https://integracja.gugik.gov.pl/daneadresowe/'
 COLUMN_LEN = 7
 
