@@ -1,0 +1,133 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2022-10-08 21:01+CEST\n"
+"PO-Revision-Date: 2022-10-08 21:28+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: /usr/lib/python3.8/argparse.py:307
+msgid "usage: "
+msgstr "użycie: "
+
+#: /usr/lib/python3.8/argparse.py:858
+msgid ".__call__() not defined"
+msgstr ".__call__() nie zdefiniowane"
+
+#: /usr/lib/python3.8/argparse.py:1161
+msgid "unknown parser %(parser_name)r (choices: %(choices)s)"
+msgstr "nieznany parser %(parser_name)r (opcje: %(choices))"
+
+#: /usr/lib/python3.8/argparse.py:1221
+msgid "argument \"-\" with mode %r"
+msgstr "argument \"-\" w trybie %r"
+
+#: /usr/lib/python3.8/argparse.py:1230
+msgid "can't open '%(filename)s': %(error)s"
+msgstr "nie można otworzyć  '%(filename)s': %(error)s"
+
+#: /usr/lib/python3.8/argparse.py:1439
+msgid "cannot merge actions - two groups are named %r"
+msgstr "nie można złączyć akcji – dwie grupy są nazwane %r"
+
+#: /usr/lib/python3.8/argparse.py:1477
+msgid "'required' is an invalid argument for positionals"
+msgstr "'required' jest nieprawidłowym parametrem dla argumentów nienazwanych (pozycyjnych)"
+
+#: /usr/lib/python3.8/argparse.py:1499
+msgid "invalid option string %(option)r: must start with a character %(prefix_chars)r"
+msgstr "nieprawidłowa opcja %(option)r: musi zaczynać się od znaku %(prefix_chars)r"
+
+#: /usr/lib/python3.8/argparse.py:1519
+msgid "dest= is required for options like %r"
+msgstr "dest= jest wymagany dla opcji takich jak %r"
+
+#: /usr/lib/python3.8/argparse.py:1536
+msgid "invalid conflict_resolution value: %r"
+msgstr "niepoprawna wartość conflict_resolution: %r"
+
+#: /usr/lib/python3.8/argparse.py:1620
+msgid "mutually exclusive arguments must be optional"
+msgstr "wzajemnie wykluczające się argumenty muszą być opcjonalne"
+
+#: /usr/lib/python3.8/argparse.py:1683
+msgid "positional arguments"
+msgstr "argumenty pozycyjne"
+
+#: /usr/lib/python3.8/argparse.py:1684
+msgid "optional arguments"
+msgstr "argumenty opcjonalne"
+
+#: /usr/lib/python3.8/argparse.py:1699
+msgid "show this help message and exit"
+msgstr "pokaż tę wiadomość pomocy i zakończ"
+
+#: /usr/lib/python3.8/argparse.py:1730
+msgid "cannot have multiple subparser arguments"
+msgstr "nie można mieć wielu subparser'ów"
+
+#: /usr/lib/python3.8/argparse.py:1782 /usr/lib/python3.8/argparse.py:2289
+msgid "unrecognized arguments: %s"
+msgstr "nierozpoznane argumenty: %s"
+
+#: /usr/lib/python3.8/argparse.py:1879
+msgid "not allowed with argument %s"
+msgstr "niedozwolone z argumentem %s"
+
+#: /usr/lib/python3.8/argparse.py:1925 /usr/lib/python3.8/argparse.py:1939
+msgid "ignored explicit argument %r"
+msgstr "zignorowany jawny argument %r"
+
+#: /usr/lib/python3.8/argparse.py:2046
+msgid "the following arguments are required: %s"
+msgstr "wymagane są następujące argumenty: %s"
+
+#: /usr/lib/python3.8/argparse.py:2061
+msgid "one of the arguments %s is required"
+msgstr "wymagany jest jeden z argumentów %s"
+
+#: /usr/lib/python3.8/argparse.py:2104
+msgid "expected one argument"
+msgstr "oczekiwano jednego argumentu"
+
+#: /usr/lib/python3.8/argparse.py:2105
+msgid "expected at most one argument"
+msgstr "oczekiwano najwyżej argumentu"
+
+#: /usr/lib/python3.8/argparse.py:2106
+msgid "expected at least one argument"
+msgstr "oczekiwano przynajmniej jednego argumentu"
+
+#: /usr/lib/python3.8/argparse.py:2168
+msgid "ambiguous option: %(option)s could match %(matches)s"
+msgstr "niejednoznaczna opcja: %(option)s mogło odpowiadać %(matches)s"
+
+#: /usr/lib/python3.8/argparse.py:2232
+msgid "unexpected option string: %s"
+msgstr "niespodziewany ciąg opcji: %s"
+
+#: /usr/lib/python3.8/argparse.py:2429
+msgid "%r is not callable"
+msgstr "%r jest niewywoływalne"
+
+#: /usr/lib/python3.8/argparse.py:2446
+msgid "invalid %(type)s value: %(value)r"
+msgstr "nieprawidłowy %(type)s wartość: %(value)r"
+
+#: /usr/lib/python3.8/argparse.py:2457
+msgid "invalid choice: %(value)r (choose from %(choices)s)"
+msgstr "nieprawidłowy wybór:  %(value)r (wybrany z %(choices)s)"
+
+#: /usr/lib/python3.8/argparse.py:2533
+msgid "%(prog)s: error: %(message)s\n"
+msgstr "%(prog)s: błąd: %(message)s\n"
