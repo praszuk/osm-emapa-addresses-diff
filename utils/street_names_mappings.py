@@ -10,8 +10,7 @@ from config import gettext as _
 
 
 STREET_NAMES_MAPPING_FILE = path.join(
-    Config.ROOT_DIR,
-    'data',
+    Config.DATA_DIR,
     'street_names_mappings.csv'
 )
 

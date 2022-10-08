@@ -6,6 +6,7 @@ from typing import Final
 
 class Config:
     ROOT_DIR: Final = path.dirname(path.abspath(__file__))
+    DATA_DIR: Final = path.join(ROOT_DIR, 'data')
     OUTPUT_BASE: Final = path.join(ROOT_DIR, 'out')
 
     TERYT_TERC: str = ''  # commune (gmina) id – 7 characters str

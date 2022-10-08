@@ -24,7 +24,7 @@ from utils.overpass import download_osm_data, is_element
 from utils.street_names_mappings import replace_streets_with_osm_names
 
 
-TERYT_TERC_FILE: str = path.join(Config.ROOT_DIR, 'data', 'terc.csv')
+TERYT_TERC_FILE: str = path.join(Config.DATA_DIR, 'terc.csv')
 
 
 def download_emapa_addresses() -> List[Address]:
