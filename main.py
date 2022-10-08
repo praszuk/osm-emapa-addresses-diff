@@ -3,8 +3,8 @@ import logging
 import pathlib
 import sys
 
+from argparse import ArgumentParser
 from os import path
-from sys import argv
 from typing import Any, Dict, List, Optional, Tuple
 
 from analyze import (
@@ -212,14 +212,22 @@ if __name__ == '__main__':
     )
 
     # Parse and check teryt_terc from user input
-    teryt_terc: str = argv[1]
+    parser = ArgumentParser()
+    parser.add_argument(
+        'teryt_terc',
+        help=_('id of commune (gmina) – 7 characters.'),
+        type=str,
+    )
+    args = parser.parse_args()
+
+    teryt_terc: str = args.teryt_terc
     try:
         area_name = parse_teryt_terc_file(TERYT_TERC_FILE, teryt_terc)
         logging.info(
             _('Parsed teryt_terc ({}) as: {}').format(teryt_terc, area_name)
         )
     except (ValueError, IOError) as e:
-        logging.error(_('Cannot parse teryt terc parameter!') + f'\n{e}')
+        logging.error(_('Cannot parse teryt terc parameter!') + f' {e}')
         sys.exit(1)
 
     Config.TERYT_TERC = teryt_terc

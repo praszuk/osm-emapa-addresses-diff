@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-06 15:05+0200\n"
-"PO-Revision-Date: 2022-10-06 15:05+0200\n"
+"POT-Creation-Date: 2022-10-08 21:29+0200\n"
+"PO-Revision-Date: 2022-10-08 21:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -29,19 +29,19 @@ msgstr ""
 msgid "Matched and replaced {} streets to existing OSM street names"
 msgstr ""
 
-#: utils/overpass.py:28
+#: utils/overpass.py:29
 msgid "Loaded Overpass query from file: {}"
 msgstr ""
 
-#: utils/overpass.py:33
+#: utils/overpass.py:34
 msgid "Downloading Overpass data for {} area..."
 msgstr ""
 
-#: utils/overpass.py:41
+#: utils/overpass.py:42
 msgid "Incorrect status code: {}"
 msgstr ""
 
-#: utils/overpass.py:49
+#: utils/overpass.py:50
 msgid "Error with downloading/parsing data: {}"
 msgstr ""
 
@@ -53,68 +53,72 @@ msgstr ""
 msgid "Incorrect teryt_terc!"
 msgstr ""
 
-#: main.py:41
+#: main.py:38
 msgid "Teryt {} not found at GUGiK website!"
 msgstr ""
 
-#: main.py:46
+#: main.py:43
 msgid "Not found e-mapa service for teryt: {}"
 msgstr ""
 
-#: main.py:50
+#: main.py:49
 msgid "Error with downloading/saving data: {}"
 msgstr ""
 
-#: main.py:60
+#: main.py:59
 msgid "Parsed {} e-mapa addresses."
 msgstr ""
 
-#: main.py:67
+#: main.py:66
 msgid "Error with downloading OSM (Overpass) data."
 msgstr ""
 
-#: main.py:74
+#: main.py:73
 msgid "Downloaded {} OSM elements."
 msgstr ""
 
-#: main.py:78
+#: main.py:77
 msgid "Parsed {} OSM addresses."
 msgstr ""
 
-#: main.py:85
+#: main.py:84
 msgid "OSM object type:"
 msgstr ""
 
-#: main.py:92
+#: main.py:91
 msgid "Key-values distribution:"
 msgstr ""
 
-#: main.py:104
+#: main.py:103
 msgid "Duplicated OSM addresses:"
 msgstr ""
 
-#: main.py:133 main.py:159
+#: main.py:128 main.py:151
 msgid ""
 "You can load it in the JOSM using \"Download object\" function (CTRL + SHIFT "
 "+ O)."
 msgstr ""
 
-#: main.py:137
+#: main.py:132
 msgid "Each line is for 1 address"
 msgstr ""
 
-#: main.py:182
-msgid "Parsed teryt_terc ({}) as: {}"
-msgstr ""
-
-#: main.py:185
-msgid "Cannot parse teryt terc parameter!"
-msgstr ""
-
-#: main.py:210
+#: main.py:187
 msgid "Missing OSM addresses which exist in the e-mapa: {}"
 msgstr ""
 
-#: main.py:219
+#: main.py:196
 msgid "Excess OSM addresses which do not exist in the e-mapa: {}"
+msgstr ""
+
+#: main.py:219
+msgid "id of commune (gmina) – 7 characters."
+msgstr ""
+
+#: main.py:228
+msgid "Parsed teryt_terc ({}) as: {}"
+msgstr ""
+
+#: main.py:231
+msgid "Cannot parse teryt terc parameter!"
 msgstr ""
