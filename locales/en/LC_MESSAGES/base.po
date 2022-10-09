@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-08 21:29+0200\n"
-"PO-Revision-Date: 2022-10-08 21:29+0200\n"
+"POT-Creation-Date: 2022-10-09 23:38+0200\n"
+"PO-Revision-Date: 2022-10-09 23:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -53,72 +53,76 @@ msgstr ""
 msgid "Incorrect teryt_terc!"
 msgstr ""
 
-#: main.py:38
+#: main.py:37
 msgid "Teryt {} not found at GUGiK website!"
 msgstr ""
 
-#: main.py:43
+#: main.py:42
 msgid "Not found e-mapa service for teryt: {}"
 msgstr ""
 
-#: main.py:49
+#: main.py:48
 msgid "Error with downloading/saving data: {}"
 msgstr ""
 
-#: main.py:59
+#: main.py:58
 msgid "Parsed {} e-mapa addresses."
 msgstr ""
 
-#: main.py:66
+#: main.py:65
 msgid "Error with downloading OSM (Overpass) data."
 msgstr ""
 
-#: main.py:73
+#: main.py:72
 msgid "Downloaded {} OSM elements."
 msgstr ""
 
-#: main.py:77
+#: main.py:76
 msgid "Parsed {} OSM addresses."
 msgstr ""
 
-#: main.py:84
+#: main.py:83
 msgid "OSM object type:"
 msgstr ""
 
-#: main.py:91
+#: main.py:90
 msgid "Key-values distribution:"
 msgstr ""
 
-#: main.py:103
+#: main.py:102
 msgid "Duplicated OSM addresses:"
 msgstr ""
 
-#: main.py:128 main.py:151
+#: main.py:127 main.py:150
 msgid ""
 "You can load it in the JOSM using \"Download object\" function (CTRL + SHIFT "
 "+ O)."
 msgstr ""
 
-#: main.py:132
+#: main.py:131
 msgid "Each line is for 1 address"
 msgstr ""
 
-#: main.py:187
+#: main.py:186
 msgid "Missing OSM addresses which exist in the e-mapa: {}"
 msgstr ""
 
-#: main.py:196
+#: main.py:195
 msgid "Excess OSM addresses which do not exist in the e-mapa: {}"
 msgstr ""
 
-#: main.py:219
+#: main.py:218
 msgid "id of commune (gmina) – 7 characters."
 msgstr ""
 
-#: main.py:228
+#: main.py:223
+msgid "exclude addresses on POI objects from duplicates."
+msgstr ""
+
+#: main.py:233
 msgid "Parsed teryt_terc ({}) as: {}"
 msgstr ""
 
-#: main.py:231
+#: main.py:236
 msgid "Cannot parse teryt terc parameter!"
 msgstr ""
