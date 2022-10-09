@@ -14,6 +14,8 @@ class Config:
     AREA_NAME: str = ''   # area name from teryt – commune (gmina) name
     OUTPUT_DIR: str = ''  # path for all output files
 
+    DUPLICATES_EXCLUDE_POI: bool = False
+
 
 _lang_translations: Final = translation(
     'base',

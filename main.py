@@ -218,6 +218,12 @@ if __name__ == '__main__':
         help=_('id of commune (gmina) – 7 characters.'),
         type=str,
     )
+    parser.add_argument(
+        '--duplicates-exclude-poi',
+        help=_('exclude addresses on POI objects from duplicates.'),
+        action='store_true',
+        dest='duplicates_exclude_poi'
+    )
     args = parser.parse_args()
 
     teryt_terc: str = args.teryt_terc
@@ -233,5 +239,6 @@ if __name__ == '__main__':
     Config.TERYT_TERC = teryt_terc
     Config.AREA_NAME = area_name
     Config.OUTPUT_DIR = path.join(Config.OUTPUT_BASE, teryt_terc)
+    Config.DUPLICATES_EXCLUDE_POI = args.duplicates_exclude_poi
 
     main()

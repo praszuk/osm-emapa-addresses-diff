@@ -2,6 +2,8 @@ from collections import Counter
 from typing import Dict, List, Set, Union
 
 from address import Address, OsmAddress
+from config import Config
+from utils.poi_tags import is_poi
 
 
 def addr_tags_distribution(addresses: List[OsmAddress]) -> Counter:
@@ -35,6 +37,9 @@ def addr_duplicates(osm_addresses: List[OsmAddress]) -> List[List[OsmAddress]]:
     duplicated_osm_addr: Dict[str, List[OsmAddress]] = dict()
 
     for osm_addr in osm_addresses:
+        if Config.DUPLICATES_EXCLUDE_POI and is_poi(osm_addr):
+            continue
+
         if osm_addr.min_unique not in duplicated_osm_addr:
             duplicated_osm_addr[osm_addr.min_unique] = []
 
