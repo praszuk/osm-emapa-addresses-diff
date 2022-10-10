@@ -37,7 +37,11 @@ def addr_duplicates(osm_addresses: List[OsmAddress]) -> List[List[OsmAddress]]:
     duplicated_osm_addr: Dict[str, List[OsmAddress]] = dict()
 
     for osm_addr in osm_addresses:
-        if Config.DUPLICATES_EXCLUDE_POI and is_poi(osm_addr):
+        if (
+            Config.DUPLICATES_EXCLUDE_POI
+                and is_poi(osm_addr)
+                and 'building' not in osm_addr.all_obj_tags.keys()
+        ):
             continue
 
         if osm_addr.min_unique not in duplicated_osm_addr:

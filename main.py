@@ -220,7 +220,10 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--duplicates-exclude-poi',
-        help=_('exclude addresses on POI objects from duplicates.'),
+        help=_(
+            'exclude addresses on POI objects from duplicates '
+            '(skipping POI with building key).'
+        ),
         action='store_true',
         dest='duplicates_exclude_poi'
     )
