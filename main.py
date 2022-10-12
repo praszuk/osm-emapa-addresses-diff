@@ -232,10 +232,8 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--no-street-names-update-check',
-        help=_(
-            'skip checking update for the {} file from GitHub.'.format(
-                STREET_NAMES_FILENAME
-            )
+        help=_('skip checking update for the {} file from GitHub.').format(
+            STREET_NAMES_FILENAME
         ),
         action='store_true',
         dest='no_street_names_update_check'
