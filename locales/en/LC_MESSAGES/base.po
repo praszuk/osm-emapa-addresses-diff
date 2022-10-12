@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 23:37+0200\n"
-"PO-Revision-Date: 2022-10-10 23:39+0200\n"
+"POT-Creation-Date: 2022-10-12 23:58+0200\n"
+"PO-Revision-Date: 2022-10-13 00:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -25,7 +25,15 @@ msgstr ""
 msgid "Downloading e-mapa csv data..."
 msgstr ""
 
-#: utils/street_names_mappings.py:78
+#: utils/street_names_mappings.py:31
+msgid "Couldn't check for the {} file data update!"
+msgstr ""
+
+#: utils/street_names_mappings.py:77
+msgid "New update for the {} file is available!"
+msgstr ""
+
+#: utils/street_names_mappings.py:101
 msgid "Matched and replaced {} streets to existing OSM street names"
 msgstr ""
 
@@ -45,6 +53,14 @@ msgstr ""
 msgid "Error with downloading/parsing data: {}"
 msgstr ""
 
+#: utils/github.py:27
+msgid "Error with downloading data from GitHub API!"
+msgstr ""
+
+#: utils/github.py:38
+msgid "Error with parsing data from GitHub API!"
+msgstr ""
+
 #: parsers/emapa.py:33
 msgid "Couldn't parse row: {}"
 msgstr ""
@@ -53,78 +69,82 @@ msgstr ""
 msgid "Incorrect teryt_terc!"
 msgstr ""
 
-#: main.py:37
+#: main.py:40
 msgid "Teryt {} not found at GUGiK website!"
 msgstr ""
 
-#: main.py:42
+#: main.py:45
 msgid "Not found e-mapa service for teryt: {}"
 msgstr ""
 
-#: main.py:48
+#: main.py:51
 msgid "Error with downloading/saving data: {}"
 msgstr ""
 
-#: main.py:58
+#: main.py:61
 msgid "Parsed {} e-mapa addresses."
 msgstr ""
 
-#: main.py:65
+#: main.py:68
 msgid "Error with downloading OSM (Overpass) data."
 msgstr ""
 
-#: main.py:72
+#: main.py:75
 msgid "Downloaded {} OSM elements."
 msgstr ""
 
-#: main.py:76
+#: main.py:79
 msgid "Parsed {} OSM addresses."
 msgstr ""
 
-#: main.py:83
+#: main.py:86
 msgid "OSM object type:"
 msgstr ""
 
-#: main.py:90
+#: main.py:93
 msgid "Key-values distribution:"
 msgstr ""
 
-#: main.py:102
+#: main.py:105
 msgid "Duplicated OSM addresses:"
 msgstr ""
 
-#: main.py:127 main.py:150
+#: main.py:130 main.py:153
 msgid ""
 "You can load it in the JOSM using \"Download object\" function (CTRL + SHIFT "
 "+ O)."
 msgstr ""
 
-#: main.py:131
+#: main.py:134
 msgid "Each line is for 1 address"
 msgstr ""
 
-#: main.py:186
+#: main.py:189
 msgid "Missing OSM addresses which exist in the e-mapa: {}"
 msgstr ""
 
-#: main.py:195
+#: main.py:198
 msgid "Excess OSM addresses which do not exist in the e-mapa: {}"
 msgstr ""
 
-#: main.py:218
+#: main.py:221
 msgid "id of commune (gmina) – 7 characters."
 msgstr ""
 
-#: main.py:224
+#: main.py:227
 msgid ""
 "exclude addresses on POI objects from duplicates (skipping POI with building "
 "key)."
 msgstr ""
 
 #: main.py:236
+msgid "skip checking update for the {} file from GitHub."
+msgstr ""
+
+#: main.py:249
 msgid "Parsed teryt_terc ({}) as: {}"
 msgstr ""
 
-#: main.py:239
+#: main.py:252
 msgid "Cannot parse teryt terc parameter!"
 msgstr ""

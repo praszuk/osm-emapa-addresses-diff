@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: osm-emapa-addresses-diff\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 23:37+0200\n"
-"PO-Revision-Date: 2022-10-10 23:40+0200\n"
+"POT-Creation-Date: 2022-10-12 23:58+0200\n"
+"PO-Revision-Date: 2022-10-13 00:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -28,7 +28,15 @@ msgstr "Przetworzono kolumny: {} {} {}"
 msgid "Downloading e-mapa csv data..."
 msgstr "Pobieranie danych csv e-mapy..."
 
-#: utils/street_names_mappings.py:78
+#: utils/street_names_mappings.py:31
+msgid "Couldn't check for the {} file data update!"
+msgstr "Nie można sprawdzić aktualizacji dla pliku: {}!"
+
+#: utils/street_names_mappings.py:77
+msgid "New update for the {} file is available!"
+msgstr "Nowa aktualizacja dla pliku {} jest dostępna!"
+
+#: utils/street_names_mappings.py:101
 msgid "Matched and replaced {} streets to existing OSM street names"
 msgstr "Dopasowano i zastąpiono {} ulic do istniejących nazw ulic z OSM"
 
@@ -48,6 +56,14 @@ msgstr "Nieprawidłowy kod status: {}"
 msgid "Error with downloading/parsing data: {}"
 msgstr "Błąd pobierania/przetwarzania danych: {}"
 
+#: utils/github.py:27
+msgid "Error with downloading data from GitHub API!"
+msgstr "Błąd podczas pobierania danych z GitHub API!"
+
+#: utils/github.py:38
+msgid "Error with parsing data from GitHub API!"
+msgstr "Błąd podczas przetwarzania danych z GitHub API!"
+
 #: parsers/emapa.py:33
 msgid "Couldn't parse row: {}"
 msgstr "Nie udało się przetworzyć wiersza: {}"
@@ -56,47 +72,47 @@ msgstr "Nie udało się przetworzyć wiersza: {}"
 msgid "Incorrect teryt_terc!"
 msgstr "Niepoprawny teryt_terc!"
 
-#: main.py:37
+#: main.py:40
 msgid "Teryt {} not found at GUGiK website!"
 msgstr "Nie znaleziono terytu {} na stronie GUGiKa!"
 
-#: main.py:42
+#: main.py:45
 msgid "Not found e-mapa service for teryt: {}"
 msgstr "Nie znaleziono e-mapy dla podanego terytu: {}"
 
-#: main.py:48
+#: main.py:51
 msgid "Error with downloading/saving data: {}"
 msgstr "Błąd podczas pobierania/zapisu danych: {}"
 
-#: main.py:58
+#: main.py:61
 msgid "Parsed {} e-mapa addresses."
 msgstr "Przetworzono {} adresów z e-mapy."
 
-#: main.py:65
+#: main.py:68
 msgid "Error with downloading OSM (Overpass) data."
 msgstr "Błąd pobierania danych OSM (Overpass)."
 
-#: main.py:72
+#: main.py:75
 msgid "Downloaded {} OSM elements."
 msgstr "Pobrano {} elementów OSM."
 
-#: main.py:76
+#: main.py:79
 msgid "Parsed {} OSM addresses."
 msgstr "Przetworzono {} adresów OSM."
 
-#: main.py:83
+#: main.py:86
 msgid "OSM object type:"
 msgstr "Typ obiektu OSM:"
 
-#: main.py:90
+#: main.py:93
 msgid "Key-values distribution:"
 msgstr "Rozkład Klucz-Wartość:"
 
-#: main.py:102
+#: main.py:105
 msgid "Duplicated OSM addresses:"
 msgstr "Zduplikowane adresy OSM:"
 
-#: main.py:127 main.py:150
+#: main.py:130 main.py:153
 msgid ""
 "You can load it in the JOSM using \"Download object\" function (CTRL + SHIFT "
 "+ O)."
@@ -104,23 +120,23 @@ msgstr ""
 "Możesz załadować to do JOSMa używając funkcji \"Pobieranie obiektu\" (CTRL + "
 "SHIFT + O)."
 
-#: main.py:131
+#: main.py:134
 msgid "Each line is for 1 address"
 msgstr "Na każdą linię przypada 1 adres"
 
-#: main.py:186
+#: main.py:189
 msgid "Missing OSM addresses which exist in the e-mapa: {}"
 msgstr "Brakujące adresy OSM, które istnieją w e-mapie: {}"
 
-#: main.py:195
+#: main.py:198
 msgid "Excess OSM addresses which do not exist in the e-mapa: {}"
 msgstr "Nadmiarowe adresy OSM, które nie istnieją w e-mapie: {}"
 
-#: main.py:218
+#: main.py:221
 msgid "id of commune (gmina) – 7 characters."
 msgstr "identyfikator gminy – 7 znaków."
 
-#: main.py:224
+#: main.py:227
 msgid ""
 "exclude addresses on POI objects from duplicates (skipping POI with building "
 "key)."
@@ -129,10 +145,14 @@ msgstr ""
 "budynku)."
 
 #: main.py:236
+msgid "skip checking update for the {} file from GitHub."
+msgstr "pomiń sprawdzenie aktualizacji dla pliku {} z GitHuba."
+
+#: main.py:249
 msgid "Parsed teryt_terc ({}) as: {}"
 msgstr "Przetworzono teryt_terc ({}) jako: {}"
 
-#: main.py:239
+#: main.py:252
 msgid "Cannot parse teryt terc parameter!"
 msgstr "Nie można przetworzyć parametru teryt terc!"
 
