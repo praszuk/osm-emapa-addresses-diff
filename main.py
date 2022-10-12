@@ -21,7 +21,10 @@ from parsers.teryt import parse_teryt_terc_file
 from exceptions import TerytNotFound, EmapaServiceNotFound
 from utils.emapa_downloader import download_emapa_csv
 from utils.overpass import download_osm_data, is_element
-from utils.street_names_mappings import replace_streets_with_osm_names
+from utils.street_names_mappings import (
+    replace_streets_with_osm_names,
+    STREET_NAMES_FILENAME
+)
 
 
 TERYT_TERC_FILE: str = path.join(Config.DATA_DIR, 'terc.csv')
@@ -211,7 +214,7 @@ if __name__ == '__main__':
         datefmt='%Y-%m-%d %H:%M:%S'
     )
 
-    # Parse and check teryt_terc from user input
+    # Parse and check arguments from user input
     parser = ArgumentParser()
     parser.add_argument(
         'teryt_terc',
@@ -226,6 +229,16 @@ if __name__ == '__main__':
         ),
         action='store_true',
         dest='duplicates_exclude_poi'
+    )
+    parser.add_argument(
+        '--no-street-names-update-check',
+        help=_(
+            'skip checking update for the {} file from GitHub.'.format(
+                STREET_NAMES_FILENAME
+            )
+        ),
+        action='store_true',
+        dest='no_street_names_update_check'
     )
     args = parser.parse_args()
 
@@ -243,5 +256,6 @@ if __name__ == '__main__':
     Config.AREA_NAME = area_name
     Config.OUTPUT_DIR = path.join(Config.OUTPUT_BASE, teryt_terc)
     Config.DUPLICATES_EXCLUDE_POI = args.duplicates_exclude_poi
+    Config.NO_STREET_NAMES_UPDATE_CHECK = args.no_street_names_update_check
 
     main()

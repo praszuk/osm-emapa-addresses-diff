@@ -7,15 +7,31 @@ from typing import Dict, List
 from address import Address
 from config import Config
 from config import gettext as _
+from utils.github import get_file_commits, get_latest_commit_date
 
 
-STREET_NAMES_MAPPING_FILE = path.join(
-    Config.DATA_DIR,
-    'street_names_mappings.csv'
-)
+# Should be updated together with street_names_mappings data file
+_LATEST_COMMIT_DATE = '2022-09-14T18:03:51Z'
+STREET_NAMES_FILENAME = 'street_names_mappings.csv'
 
 
-# TODO add update check from github
+def _is_update_aviailable() -> bool:
+    try:
+        commits_data = get_file_commits(
+            'openstreetmap-polska',
+            'gugik2osm',
+            f'processing/sql/data/{STREET_NAMES_FILENAME}'
+        )
+        commit_date = get_latest_commit_date(commits_data)
+
+        return commit_date != _LATEST_COMMIT_DATE
+
+    except (IOError, KeyError):
+        logging.exception(_(
+            'Couldn\'t check for the {} file data update!'
+        ).format(STREET_NAMES_FILENAME))
+
+    return False
 
 
 def _load_mappings_data() -> Dict[str, Dict[str, str]]:
@@ -26,7 +42,8 @@ def _load_mappings_data() -> Dict[str, Dict[str, str]]:
     """
     street_names: Dict[str, Dict[str, str]] = dict()
 
-    with open(STREET_NAMES_MAPPING_FILE, 'r') as csv_file:
+    filename = path.join(Config.DATA_DIR, STREET_NAMES_FILENAME)
+    with open(filename, 'r') as csv_file:
         reader = DictReader(csv_file, delimiter=',')
         for row in reader:
             simc = row['teryt_simc_code']
@@ -55,6 +72,12 @@ def replace_streets_with_osm_names(emapa_addresses: List[Address]) -> None:
     :param emapa_addresses: address to find and optionally match and replace
     street_names
     """
+    if not Config.NO_STREET_NAMES_UPDATE_CHECK and _is_update_aviailable():
+        logging.warning(
+            _('New update for the {} file is available!').format(
+                STREET_NAMES_FILENAME
+            )
+        )
 
     street_names: Dict[str, Dict[str, str]] = _load_mappings_data()
     matched_streets = set()

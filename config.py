@@ -15,6 +15,7 @@ class Config:
     OUTPUT_DIR: str = ''  # path for all output files
 
     DUPLICATES_EXCLUDE_POI: bool = False
+    NO_STREET_NAMES_UPDATE_CHECK = False
 
 
 _lang_translations: Final = translation(
