@@ -238,6 +238,16 @@ if __name__ == '__main__':
         action='store_true',
         dest='no_street_names_update_check'
     )
+    parser.add_argument(
+        '--ignore-case-sensitive-housenumber',
+        '-i',
+        help=_(
+            'ignore difference between capital and lower-case letters '
+            'for house numbers e.g. 12a will be processed same as 12A.'
+        ),
+        action='store_true',
+        dest='ignore_cs_housenumber'
+    )
     args = parser.parse_args()
 
     teryt_terc: str = args.teryt_terc
@@ -255,5 +265,6 @@ if __name__ == '__main__':
     Config.OUTPUT_DIR = path.join(Config.OUTPUT_BASE, teryt_terc)
     Config.DUPLICATES_EXCLUDE_POI = args.duplicates_exclude_poi
     Config.NO_STREET_NAMES_UPDATE_CHECK = args.no_street_names_update_check
+    Config.IGNORE_CASE_SENSITIVE_HOUSENUMBER = args.ignore_cs_housenumber
 
     main()

@@ -4,6 +4,8 @@ from enum import Enum
 from dataclasses import dataclass
 from typing import Any, Dict, List
 
+from config import Config
+
 
 class OsmType(Enum):
     NODE = 'node'
@@ -34,9 +36,13 @@ class Address:
         :return: minimal unique string for each address which contains
             city, street (optionally), housenumber
         """
-        return f'{self.city}' \
-            f'{self.street if self.street else ""}' \
-            f'{self.housenumber}'
+        street = self.street if self.street else ''
+
+        housenumber = self.housenumber
+        if Config.IGNORE_CASE_SENSITIVE_HOUSENUMBER:
+            housenumber = housenumber.lower()
+
+        return f'{self.city}{street}{housenumber}'
 
     def to_osm_tags(self) -> Dict[str, str]:
         addr = {}
