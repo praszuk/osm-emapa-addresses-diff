@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-12 23:58+0200\n"
-"PO-Revision-Date: 2022-10-13 00:14+0200\n"
+"POT-Creation-Date: 2022-10-14 14:52+0200\n"
+"PO-Revision-Date: 2022-10-14 14:53+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -137,14 +137,20 @@ msgid ""
 "key)."
 msgstr ""
 
-#: main.py:236
+#: main.py:235
 msgid "skip checking update for the {} file from GitHub."
 msgstr ""
 
-#: main.py:249
+#: main.py:245
+msgid ""
+"ignore difference between capital and lower-case letters for house numbers e."
+"g. 12a will be processed same as 12A."
+msgstr ""
+
+#: main.py:257
 msgid "Parsed teryt_terc ({}) as: {}"
 msgstr ""
 
-#: main.py:252
+#: main.py:260
 msgid "Cannot parse teryt terc parameter!"
 msgstr ""
