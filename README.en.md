@@ -6,12 +6,12 @@ Allows simple data analysis and detection of address discrepancies.
 
 ## Features
 - Downloading current data from e-mapa/OpenStreetMap.
-- Counting the type of objects from OSM data
-- Address tags distribution in OSM data (allows tracking of missing key/value data)
+- Counting the type of objects from OSM data.
+- Address tags distribution in OSM data (allows tracking of missing key/value data).
 - Duplicate address detection.
 - Detection of missing addresses in OpenStreetMap (including erroneous ones) from the e-mapa.
 - Detection of excess addresses in OpenStreetMap (including erroneous ones) that do not exist in the e-mapa.
-- Saving of detected address inconsistencies to files (.geojson and .txt)
+- Saving of detected address inconsistencies to files (.geojson and .txt).
 
 ## Usage
 The tool requires to be installed [Pythona3](https://www.python.org/) with dependencies defined in [requirements.txt](requirements.txt).
