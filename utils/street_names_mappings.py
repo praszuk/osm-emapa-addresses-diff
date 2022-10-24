@@ -11,7 +11,7 @@ from utils.github import get_file_commits, get_latest_commit_date
 
 
 # Should be updated together with street_names_mappings data file
-_LATEST_COMMIT_DATE = '2022-09-14T18:03:52Z'
+_LATEST_COMMIT_DATE = '2022-10-20T20:21:38Z'
 STREET_NAMES_FILENAME = 'street_names_mappings.csv'
 
 
