@@ -251,7 +251,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '-isf',
         '--ignore-street-features',
-        help=_('ignore ULIC features in street names such as "al." or "plac"'),
+        help=_(
+            'ignore ULIC features in street names such as "al." or "plac".'
+        ),
         action='store_true',
         dest='ignore_street_features'
     )
