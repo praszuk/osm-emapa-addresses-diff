@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 14:52+0200\n"
-"PO-Revision-Date: 2022-10-14 14:53+0200\n"
+"POT-Creation-Date: 2022-10-28 00:09+0200\n"
+"PO-Revision-Date: 2022-10-28 00:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -147,10 +147,14 @@ msgid ""
 "g. 12a will be processed same as 12A."
 msgstr ""
 
-#: main.py:257
+#: main.py:255
+msgid "ignore ULIC features in street names such as \"al.\" or \"plac\"."
+msgstr ""
+
+#: main.py:266
 msgid "Parsed teryt_terc ({}) as: {}"
 msgstr ""
 
-#: main.py:260
+#: main.py:269
 msgid "Cannot parse teryt terc parameter!"
 msgstr ""
