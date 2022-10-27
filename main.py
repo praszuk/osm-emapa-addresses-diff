@@ -239,14 +239,21 @@ if __name__ == '__main__':
         dest='no_street_names_update_check'
     )
     parser.add_argument(
+        '-icsh',
         '--ignore-case-sensitive-housenumber',
-        '-i',
         help=_(
             'ignore difference between capital and lower-case letters '
             'for house numbers e.g. 12a will be processed same as 12A.'
         ),
         action='store_true',
         dest='ignore_cs_housenumber'
+    )
+    parser.add_argument(
+        '-isf',
+        '--ignore-street-features',
+        help=_('ignore ULIC features in street names such as "al." or "plac"'),
+        action='store_true',
+        dest='ignore_street_features'
     )
     args = parser.parse_args()
 
@@ -266,5 +273,6 @@ if __name__ == '__main__':
     Config.DUPLICATES_EXCLUDE_POI = args.duplicates_exclude_poi
     Config.NO_STREET_NAMES_UPDATE_CHECK = args.no_street_names_update_check
     Config.IGNORE_CASE_SENSITIVE_HOUSENUMBER = args.ignore_cs_housenumber
+    Config.IGNORE_STREET_FEATURES = args.ignore_street_features
 
     main()

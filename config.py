@@ -17,6 +17,7 @@ class Config:
     DUPLICATES_EXCLUDE_POI: bool = False
     NO_STREET_NAMES_UPDATE_CHECK: bool = False
     IGNORE_CASE_SENSITIVE_HOUSENUMBER: bool = False
+    IGNORE_STREET_FEATURES: bool = False
 
 
 _lang_translations: Final = translation(

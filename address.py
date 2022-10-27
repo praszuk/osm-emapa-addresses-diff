@@ -30,6 +30,24 @@ class Address:
     street: str  # if no street then None or empty str
     source: str
 
+    ULIC_FEATURES = [
+        'ul.', 'ulica',
+        'al.', 'aleja',
+        'pl.', 'plac',
+        'skwer',
+        'bulw.', 'bulwar',
+        'rondo',
+        'park',
+        'rynek',
+        'szosa',
+        'droga',
+        'os.', 'osiedle',
+        'ogród',
+        'wyspa',
+        'wyb.', 'wybrzeże',
+        'inne'
+    ]
+
     @property
     def min_unique(self) -> str:
         """
@@ -41,6 +59,12 @@ class Address:
         housenumber = self.housenumber
         if Config.IGNORE_CASE_SENSITIVE_HOUSENUMBER:
             housenumber = housenumber.lower()
+
+        if Config.IGNORE_STREET_FEATURES:
+            street = street.lower()
+            for feature in self.ULIC_FEATURES:
+                street = street.replace(feature, '')
+            street = street.strip()
 
         return f'{self.city}{street}{housenumber}'
 
