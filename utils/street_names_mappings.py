@@ -1,8 +1,9 @@
 import logging
 
+from datetime import datetime
 from csv import DictReader
 from os import path
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from address import Address
 from config import Config
@@ -10,8 +11,7 @@ from config import gettext as _
 from utils.github import get_file_commits, get_latest_commit_date
 
 
-# Should be updated together with street_names_mappings data file
-_LATEST_COMMIT_DATE = '2022-10-20T20:21:38Z'
+STREET_NAMES_DT_FILENAME = 'street_names_dt.txt'
 STREET_NAMES_FILENAME = 'street_names_mappings.csv'
 
 
@@ -24,7 +24,7 @@ def _is_update_aviailable() -> bool:
         )
         commit_date = get_latest_commit_date(commits_data)
 
-        return commit_date != _LATEST_COMMIT_DATE
+        return commit_date != str(_load_current_file_dt())
 
     except (IOError, KeyError):
         logging.exception(_(
@@ -32,6 +32,23 @@ def _is_update_aviailable() -> bool:
         ).format(STREET_NAMES_FILENAME))
 
     return False
+
+
+def _load_current_file_dt() -> Optional[datetime]:
+    filename = path.join(Config.DATA_DIR, STREET_NAMES_DT_FILENAME)
+    try:
+        with open(filename, 'r') as dt_file:
+            raw_dt = dt_file.read().strip()
+            if raw_dt[-1] == 'Z':  # needed for python version < 3.10
+                raw_dt = raw_dt[:-1] + '+00:00'
+            return datetime.fromisoformat(raw_dt)
+
+    except (IOError, ValueError):
+        logging.exception(_(
+            'Couldn\'t read local datetime of street names mappings data'
+            ' from file: {}'.format(filename)
+        ))
+        return None
 
 
 def _load_mappings_data() -> Dict[str, Dict[str, str]]:
