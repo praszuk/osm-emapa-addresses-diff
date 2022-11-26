@@ -37,8 +37,8 @@ def _load_current_file_dt() -> Optional[datetime]:
     except (IOError, ValueError):
         logging.exception(_(
             'Couldn\'t read local datetime of street names mappings data'
-            ' from file: {}'.format(filename)
-        ))
+            ' from file: {}'
+        ).format(filename))
         return None
 
 
@@ -88,11 +88,11 @@ def _update_street_names_data(remote_dt: datetime) -> None:
         f.write(remote_dt.isoformat())
 
     logging.info(
-        _('Updated street names mappings files using data from {} '.format(
+        _('Updated street names mappings files using data from {}').format(
             filename_data,
             filename_dt,
             remote_dt
-        ))
+        )
     )
 
 

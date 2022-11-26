@@ -65,10 +65,8 @@ def download_file(user: str, repo: str, path: str) -> Optional[str]:
         response = requests.get(url)
         if response.status_code != 200:
             logging.exception(_(
-                'Incorrect status code at downloading github file: {}'.format(
-                    response.status_code
-                ))
-            )
+                'Incorrect status code at downloading github file: {}'
+            ).format(response.status_code))
 
             return None
 
