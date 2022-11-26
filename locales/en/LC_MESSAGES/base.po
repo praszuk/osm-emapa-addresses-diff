@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 19:02+0100\n"
-"PO-Revision-Date: 2022-11-26 19:03+0100\n"
+"POT-Creation-Date: 2022-11-26 19:19+0100\n"
+"PO-Revision-Date: 2022-11-26 19:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -35,7 +35,7 @@ msgid "Couldn't download street names mappings data update"
 msgstr ""
 
 #: utils/street_names_mappings.py:91
-msgid "Updated street names mappings files using data from {} "
+msgid "Updated street names mappings files using data from {}"
 msgstr ""
 
 #: utils/street_names_mappings.py:111
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Incorrect status code at downloading github file: {}"
 msgstr ""
 
-#: utils/github.py:78
+#: utils/github.py:76
 msgid "Error with downloading raw data from GitHub!"
 msgstr ""
 
