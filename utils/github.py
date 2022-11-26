@@ -1,10 +1,14 @@
 import logging
 import requests
 
-from typing import Any, Dict, List
+from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 from config import gettext as _
+
+
 _API_URL = 'https://api.github.com/repos/<user>/<repo>/commits?path=<path>'
+_RAW_FILE_URL = 'https://raw.githubusercontent.com/<user>/<repo>/<path>'
 
 
 def get_file_commits(user: str, repo: str, path: str) -> List[Dict[Any, Any]]:
@@ -28,12 +32,48 @@ def get_file_commits(user: str, repo: str, path: str) -> List[Dict[Any, Any]]:
         return []
 
 
-def get_latest_commit_date(commits_data: List[Dict[Any, Any]]) -> str:
+def _parse_github_dt(raw_dt: str) -> Optional[datetime]:
+    raw_dt = raw_dt.strip()
+    if raw_dt[-1] == 'Z':  # needed for python version < 3.10
+        raw_dt = raw_dt[:-1] + '+00:00'
+
+    return datetime.fromisoformat(raw_dt)
+
+
+def get_latest_commit_dt(
+    commits_data: List[Dict[Any, Any]]
+) -> Optional[datetime]:
     """
-    :return: date (as GitHub date str format) or empty string if no data
+    :return: datetime (as GitHub date str format) or None if no/invalid data
     """
     try:
-        return commits_data[0]['commit']['committer']['date']
-    except (IndexError, KeyError):
+        raw_dt = commits_data[0]['commit']['committer']['date']
+        return _parse_github_dt(raw_dt)
+
+    except (IndexError, KeyError, ValueError):
         logging.exception(_('Error with parsing data from GitHub API!'))
-        return ''
+        return None
+
+
+def download_file(user: str, repo: str, path: str) -> Optional[str]:
+    try:
+        url = _RAW_FILE_URL\
+            .replace('<user>', user) \
+            .replace('<repo>', repo) \
+            .replace('<path>', path)
+
+        response = requests.get(url)
+        if response.status_code != 200:
+            logging.exception(_(
+                'Incorrect status code at downloading github file: {}'.format(
+                    response.status_code
+                ))
+            )
+
+            return None
+
+        return response.text
+
+    except IOError:
+        logging.exception(_('Error with downloading raw data from GitHub!'))
+        return None

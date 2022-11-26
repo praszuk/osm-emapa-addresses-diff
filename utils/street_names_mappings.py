@@ -1,37 +1,45 @@
 import logging
 
+from datetime import datetime
 from csv import DictReader
 from os import path
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from address import Address
 from config import Config
 from config import gettext as _
-from utils.github import get_file_commits, get_latest_commit_date
+from utils.github import (
+    download_file,
+    get_file_commits,
+    get_latest_commit_dt
+)
 
 
-# Should be updated together with street_names_mappings data file
-_LATEST_COMMIT_DATE = '2022-10-20T20:21:38Z'
+STREET_NAMES_DT_FILENAME = 'street_names_dt.txt'
 STREET_NAMES_FILENAME = 'street_names_mappings.csv'
 
 
-def _is_update_aviailable() -> bool:
+def _get_remote_file_dt() -> datetime:
+    commits_data = get_file_commits(
+        'openstreetmap-polska',
+        'gugik2osm',
+        f'processing/sql/data/{STREET_NAMES_FILENAME}'
+    )
+    return get_latest_commit_dt(commits_data)
+
+
+def _load_current_file_dt() -> Optional[datetime]:
+    filename = path.join(Config.DATA_DIR, STREET_NAMES_DT_FILENAME)
     try:
-        commits_data = get_file_commits(
-            'openstreetmap-polska',
-            'gugik2osm',
-            f'processing/sql/data/{STREET_NAMES_FILENAME}'
-        )
-        commit_date = get_latest_commit_date(commits_data)
+        with open(filename, 'r') as dt_file:
+            return datetime.fromisoformat(dt_file.read().strip())
 
-        return commit_date != _LATEST_COMMIT_DATE
-
-    except (IOError, KeyError):
+    except (IOError, ValueError):
         logging.exception(_(
-            'Couldn\'t check for the {} file data update!'
-        ).format(STREET_NAMES_FILENAME))
-
-    return False
+            'Couldn\'t read local datetime of street names mappings data'
+            ' from file: {}'.format(filename)
+        ))
+        return None
 
 
 def _load_mappings_data() -> Dict[str, Dict[str, str]]:
@@ -60,6 +68,55 @@ def _load_mappings_data() -> Dict[str, Dict[str, str]]:
     return street_names
 
 
+def _update_street_names_data(remote_dt: datetime) -> None:
+    filename_data = path.join(Config.DATA_DIR, STREET_NAMES_FILENAME)
+    filename_dt = path.join(Config.DATA_DIR, STREET_NAMES_DT_FILENAME)
+    csv_data = download_file(
+        'openstreetmap-polska',
+        'gugik2osm',
+        f'main/processing/sql/data/{STREET_NAMES_FILENAME}'
+    )
+    if not csv_data:
+        raise ValueError(
+            _('Couldn\'t download street names mappings data update')
+        )
+
+    with open(filename_data, 'w') as f:
+        f.write(csv_data)
+
+    with open(filename_dt, 'w') as f:
+        f.write(remote_dt.isoformat())
+
+    logging.info(
+        _('Updated street names mappings files using data from {} '.format(
+            filename_data,
+            filename_dt,
+            remote_dt
+        ))
+    )
+
+
+def _street_names_autoupdate():
+    """
+    :raise ValueError: if downloaded data is None
+    """
+    local_dt = _load_current_file_dt()
+    remote_dt = _get_remote_file_dt()
+
+    if local_dt == remote_dt:
+        logging.debug('No autoupdate of street names mappings needed.')
+        return
+
+    logging.warning(
+        _('New update for the {} file is available!').format(
+            STREET_NAMES_FILENAME
+        )
+    )
+
+    # Autoupdating
+    _update_street_names_data(remote_dt)
+
+
 def replace_streets_with_osm_names(emapa_addresses: List[Address]) -> None:
     """
     Use street_names community file to find and replace names which contains
@@ -72,12 +129,11 @@ def replace_streets_with_osm_names(emapa_addresses: List[Address]) -> None:
     :param emapa_addresses: address to find and optionally match and replace
     street_names
     """
-    if not Config.NO_STREET_NAMES_UPDATE_CHECK and _is_update_aviailable():
-        logging.warning(
-            _('New update for the {} file is available!').format(
-                STREET_NAMES_FILENAME
-            )
-        )
+    if not Config.NO_STREET_NAMES_UPDATE_CHECK:
+        try:
+            _street_names_autoupdate()
+        except ValueError:
+            logging.exception('Couldn\'t autoupdate street names mappigns!')
 
     street_names: Dict[str, Dict[str, str]] = _load_mappings_data()
     matched_streets = set()
