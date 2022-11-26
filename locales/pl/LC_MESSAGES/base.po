@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: osm-emapa-addresses-diff\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-28 00:09+0200\n"
-"PO-Revision-Date: 2022-10-28 00:10+0200\n"
+"POT-Creation-Date: 2022-11-26 19:02+0100\n"
+"PO-Revision-Date: 2022-11-26 19:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -28,15 +28,25 @@ msgstr "Przetworzono kolumny: {} {} {}"
 msgid "Downloading e-mapa csv data..."
 msgstr "Pobieranie danych csv e-mapy..."
 
-#: utils/street_names_mappings.py:31
-msgid "Couldn't check for the {} file data update!"
-msgstr "Nie można sprawdzić aktualizacji dla pliku: {}!"
+#: utils/street_names_mappings.py:39
+msgid ""
+"Couldn't read local datetime of street names mappings data from file: {}"
+msgstr ""
+"Nie można wczytać lokalnego czasu i daty dla mapowania nazw ulic z pliku: {}"
 
-#: utils/street_names_mappings.py:77
+#: utils/street_names_mappings.py:81
+msgid "Couldn't download street names mappings data update"
+msgstr "Nie można pobrać aktualizacji danych dot. mapowania nazw ulic"
+
+#: utils/street_names_mappings.py:91
+msgid "Updated street names mappings files using data from {} "
+msgstr "Zaktualizowano pliki mapowania nazw ulic z danych z {}"
+
+#: utils/street_names_mappings.py:111
 msgid "New update for the {} file is available!"
 msgstr "Nowa aktualizacja dla pliku {} jest dostępna!"
 
-#: utils/street_names_mappings.py:101
+#: utils/street_names_mappings.py:157
 msgid "Matched and replaced {} streets to existing OSM street names"
 msgstr "Dopasowano i zastąpiono {} ulic do istniejących nazw ulic z OSM"
 
@@ -56,13 +66,21 @@ msgstr "Nieprawidłowy kod status: {}"
 msgid "Error with downloading/parsing data: {}"
 msgstr "Błąd pobierania/przetwarzania danych: {}"
 
-#: utils/github.py:27
+#: utils/github.py:31
 msgid "Error with downloading data from GitHub API!"
 msgstr "Błąd podczas pobierania danych z GitHub API!"
 
-#: utils/github.py:38
+#: utils/github.py:54
 msgid "Error with parsing data from GitHub API!"
 msgstr "Błąd podczas przetwarzania danych z GitHub API!"
+
+#: utils/github.py:68
+msgid "Incorrect status code at downloading github file: {}"
+msgstr "Nieprawidłowy kod status podczas pobierania pliku z githuba: {}"
+
+#: utils/github.py:78
+msgid "Error with downloading raw data from GitHub!"
+msgstr "Błąd podczas pobierania surowych danych z GitHuba!"
 
 #: parsers/emapa.py:33
 msgid "Couldn't parse row: {}"
@@ -167,6 +185,9 @@ msgstr "Przetworzono teryt_terc ({}) jako: {}"
 #: main.py:269
 msgid "Cannot parse teryt terc parameter!"
 msgstr "Nie można przetworzyć parametru teryt terc!"
+
+#~ msgid "Couldn't check for the {} file data update!"
+#~ msgstr "Nie można sprawdzić aktualizacji dla pliku: {}!"
 
 #~ msgid ""
 #~ "\n"

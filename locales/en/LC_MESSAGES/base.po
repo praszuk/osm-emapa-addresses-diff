@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-28 00:09+0200\n"
-"PO-Revision-Date: 2022-10-28 00:10+0200\n"
+"POT-Creation-Date: 2022-11-26 19:02+0100\n"
+"PO-Revision-Date: 2022-11-26 19:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -25,15 +25,24 @@ msgstr ""
 msgid "Downloading e-mapa csv data..."
 msgstr ""
 
-#: utils/street_names_mappings.py:31
-msgid "Couldn't check for the {} file data update!"
+#: utils/street_names_mappings.py:39
+msgid ""
+"Couldn't read local datetime of street names mappings data from file: {}"
 msgstr ""
 
-#: utils/street_names_mappings.py:77
+#: utils/street_names_mappings.py:81
+msgid "Couldn't download street names mappings data update"
+msgstr ""
+
+#: utils/street_names_mappings.py:91
+msgid "Updated street names mappings files using data from {} "
+msgstr ""
+
+#: utils/street_names_mappings.py:111
 msgid "New update for the {} file is available!"
 msgstr ""
 
-#: utils/street_names_mappings.py:101
+#: utils/street_names_mappings.py:157
 msgid "Matched and replaced {} streets to existing OSM street names"
 msgstr ""
 
@@ -53,12 +62,20 @@ msgstr ""
 msgid "Error with downloading/parsing data: {}"
 msgstr ""
 
-#: utils/github.py:27
+#: utils/github.py:31
 msgid "Error with downloading data from GitHub API!"
 msgstr ""
 
-#: utils/github.py:38
+#: utils/github.py:54
 msgid "Error with parsing data from GitHub API!"
+msgstr ""
+
+#: utils/github.py:68
+msgid "Incorrect status code at downloading github file: {}"
+msgstr ""
+
+#: utils/github.py:78
+msgid "Error with downloading raw data from GitHub!"
 msgstr ""
 
 #: parsers/emapa.py:33
