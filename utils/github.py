@@ -1,10 +1,13 @@
 import logging
 import requests
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from config import gettext as _
+
+
 _API_URL = 'https://api.github.com/repos/<user>/<repo>/commits?path=<path>'
+_RAW_FILE_URL = 'https://raw.githubusercontent.com/<user>/<repo>/<path>'
 
 
 def get_file_commits(user: str, repo: str, path: str) -> List[Dict[Any, Any]]:
@@ -37,3 +40,27 @@ def get_latest_commit_date(commits_data: List[Dict[Any, Any]]) -> str:
     except (IndexError, KeyError):
         logging.exception(_('Error with parsing data from GitHub API!'))
         return ''
+
+
+def download_file(user: str, repo: str, path: str) -> Optional[str]:
+    try:
+        url = _RAW_FILE_URL\
+            .replace('<user>', user) \
+            .replace('<repo>', repo) \
+            .replace('<path>', path)
+        print(url)
+        response = requests.get(url)
+        if response.status_code != 200:
+            logging.exception(_(
+                'Incorrect status code at downloading github file: {}'.format(
+                    response.status_code
+                ))
+            )
+
+            return None
+
+        return response.text
+
+    except IOError:
+        logging.exception(_('Error with downloading raw data from GitHub!'))
+        return None
