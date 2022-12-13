@@ -21,6 +21,7 @@ def parse_streets_names_from_elements(
     alt_name: 'Firstname Lastname'
     official_name: 'Prefix1 Prefix2 Firstname Lastanme'
     then it creates 2 items alt_name: name and official_name: name
+    keys are lowered
     """
     streets = dict()
     for element in elements:
@@ -28,6 +29,6 @@ def parse_streets_names_from_elements(
         for alt_name_key in ALT_NAME_KEYS:
             alt_value = element['tags'].get(alt_name_key, None)
             if alt_value:
-                streets[alt_value] = element['tags']['name']
+                streets[alt_value.lower()] = element['tags']['name']
 
     return streets
