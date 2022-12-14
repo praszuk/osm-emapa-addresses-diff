@@ -217,8 +217,12 @@ def main():
     replace_streets_with_osm_names(emapa_addresses)
     osm_addresses: List[OsmAddress] = download_osm_addresses()
 
-    osm_alt_streets_names = download_osm_alt_streets_names()
-    replace_streets_with_osm_alt_names(emapa_addresses, osm_alt_streets_names)
+    if not Config.NO_STREET_ALT_NAMES_REPLACE:
+        osm_alt_streets_names = download_osm_alt_streets_names()
+        replace_streets_with_osm_alt_names(
+            emapa_addresses,
+            osm_alt_streets_names
+        )
 
     # Analysis reports
     print('\n')
@@ -285,6 +289,15 @@ if __name__ == '__main__':
         dest='no_street_names_update_check'
     )
     parser.add_argument(
+        '--no-street-alt-names-replace',
+        help=_(
+            'skip downloading OSM streets for matching more names'
+            ' in e-mapa data using alt tags like {}.'
+        ).format('official_name'),
+        action='store_true',
+        dest='no_street_alt_names_replace'
+    )
+    parser.add_argument(
         '-icsh',
         '--ignore-case-sensitive-housenumber',
         help=_(
@@ -320,6 +333,7 @@ if __name__ == '__main__':
     Config.OUTPUT_DIR = path.join(Config.OUTPUT_BASE, teryt_terc)
     Config.DUPLICATES_EXCLUDE_POI = args.duplicates_exclude_poi
     Config.NO_STREET_NAMES_UPDATE_CHECK = args.no_street_names_update_check
+    Config.NO_STREET_ALT_NAMES_REPLACE = args.no_street_alt_names_replace
     Config.IGNORE_CASE_SENSITIVE_HOUSENUMBER = args.ignore_cs_housenumber
     Config.IGNORE_STREET_FEATURES = args.ignore_street_features
 
