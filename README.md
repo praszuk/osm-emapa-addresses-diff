@@ -6,6 +6,7 @@ Umożliwia prostą analizę danych i wykrycie niezgodności w adresacji.
 
 ## Funkcjonalności
 - Pobieranie aktualnych danych z e-mapy/OpenStreetMap.
+- Dopasowywanie nazw ulic z e-mapy do nazw z OSM (plik z [gugik2osm](https://github.com/openstreetmap-polska/gugik2osm/blob/main/processing/sql/data/street_names_mappings.csv) oraz sprawdzanie [alternatywnych tagów](utils/alt_street_names.py) z nazwami z obiektów ulic).
 - Zliczanie typu obiektów z danych OSM.
 - Użycie poszczególnych tagów adresowych w danych OSM (pozwala śledzić braki danych kluczy i wartości).
 - Wykrywanie duplikatów adresów.

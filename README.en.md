@@ -6,6 +6,7 @@ Allows simple data analysis and detection of address discrepancies.
 
 ## Features
 - Downloading current data from e-mapa/OpenStreetMap.
+- Matching street names from e-mapa with names from OSM (using [gugik2osm](https://github.com/openstreetmap-polska/gugik2osm/blob/main/processing/sql/data/street_names_mappings.csv) and checking [alternative tags](utils/alt_street_names.py) with names from street objects).
 - Counting the type of objects from OSM data.
 - Address tags distribution in OSM data (allows tracking of missing key/value data).
 - Duplicate address detection.
