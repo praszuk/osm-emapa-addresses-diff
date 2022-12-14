@@ -291,7 +291,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--no-street-alt-names-replace',
         help=_(
-            'skip downloading OSM streets for matching more names'
+            'skip downloading OSM streets to not matching more names'
             ' in e-mapa data using alt tags like {}.'
         ).format('official_name'),
         action='store_true',
