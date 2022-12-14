@@ -19,7 +19,10 @@ from config import gettext as _
 from parsers.emapa import parse_emapa_file
 from parsers.teryt import parse_teryt_terc_file
 from exceptions import TerytNotFound, EmapaServiceNotFound
-from utils.alt_street_names import parse_streets_names_from_elements
+from utils.alt_street_names import (
+    parse_streets_names_from_elements,
+    replace_streets_with_osm_alt_names
+)
 from utils.emapa_downloader import download_emapa_csv
 from utils.overpass import (
     download_osm_data,
@@ -111,9 +114,10 @@ def download_osm_alt_streets_names() -> Dict[str, str]:
     )
 
     osm_streets: Dict[str, str] = parse_streets_names_from_elements(elements)
+    unique_street = set(w['tags']['name'] for w in elements)
     logging.info(
-        _('Parsed {} OSM streets objects with {} alternate names.').format(
-            len(elements),
+        _('Parsed {} OSM unique streets with {} alternate names.').format(
+            len(unique_street),
             len(osm_streets)
         )
     )
@@ -213,7 +217,8 @@ def main():
     replace_streets_with_osm_names(emapa_addresses)
     osm_addresses: List[OsmAddress] = download_osm_addresses()
 
-    osm_alt_streets_names: Dict[str, str] = download_osm_alt_streets_names()
+    osm_alt_streets_names = download_osm_alt_streets_names()
+    replace_streets_with_osm_alt_names(emapa_addresses, osm_alt_streets_names)
 
     # Analysis reports
     print('\n')
