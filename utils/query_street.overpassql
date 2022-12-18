@@ -1,0 +1,1 @@
+[out:json][timeout:900];area[boundary]["teryt:terc"="<teryt_terc>"]->.searchArea;(way["highway"]["name"](area.searchArea););out tags;

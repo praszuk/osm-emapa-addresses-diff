@@ -10,24 +10,29 @@ from config import gettext as _
 
 
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
-QUERY_FILE = path.join(Config.ROOT_DIR, 'utils', 'query.overpassql')
+QUERY_ADDR = path.join(Config.ROOT_DIR, 'utils', 'query_addr.overpassql')
+QUERY_STREET = path.join(Config.ROOT_DIR, 'utils', 'query_street.overpassql')
 
 TIMEOUT = 30  # seconds
 RETRIES = 5
 
 
-def download_osm_data(teryt_terc: str) -> Optional[Dict[Any, Any]]:
+def download_osm_data(
+    teryt_terc: str,
+    query_filename: str
+) -> Optional[Dict[Any, Any]]:
     """
     :param teryt_terc: commune (gmina) id
     all query will use administrative boundary from given value
+    :param query_filename: path to query which contain '<teryt_terc>' to replace
     :return: Raw OSM Overpass data JSON (as dict) or None
     """
-    with open(QUERY_FILE, 'r') as f:
+    with open(query_filename, 'r') as f:
         query = f.read().strip().replace('<teryt_terc>', teryt_terc)
 
     logging.info(
         _('Loaded Overpass query from file: {}').format(
-            path.split(QUERY_FILE)[-1]
+            path.split(query_filename)[-1]
         )
     )
     logging.info(

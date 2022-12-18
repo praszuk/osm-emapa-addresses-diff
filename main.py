@@ -19,8 +19,17 @@ from config import gettext as _
 from parsers.emapa import parse_emapa_file
 from parsers.teryt import parse_teryt_terc_file
 from exceptions import TerytNotFound, EmapaServiceNotFound
+from utils.alt_street_names import (
+    parse_streets_names_from_elements,
+    replace_streets_with_osm_alt_names
+)
 from utils.emapa_downloader import download_emapa_csv
-from utils.overpass import download_osm_data, is_element
+from utils.overpass import (
+    download_osm_data,
+    is_element,
+    QUERY_ADDR,
+    QUERY_STREET
+)
 from utils.street_names_mappings import (
     replace_streets_with_osm_names,
     STREET_NAMES_FILENAME
@@ -63,16 +72,23 @@ def download_emapa_addresses() -> List[Address]:
 
 
 def download_osm_addresses() -> List[OsmAddress]:
-    osm_data: Optional[Dict[str, Any]] = download_osm_data(Config.TERYT_TERC)
+    osm_data: Optional[Dict[str, Any]] = download_osm_data(
+        Config.TERYT_TERC,
+        QUERY_ADDR
+    )
     if osm_data is None:
-        logging.error(_('Error with downloading OSM (Overpass) data.'))
+        logging.error(
+            _('Error with downloading OSM (Overpass) addresses data.')
+        )
         sys.exit(4)
 
     elements: List[Dict[str, Any]] = list(
         filter(is_element, osm_data['elements'])
     )
 
-    logging.debug(_('Downloaded {} OSM elements.').format(len(elements)))
+    logging.debug(_('Downloaded {} OSM addresses elements.').format(
+        len(elements))
+    )
     osm_addresses: List[OsmAddress] = list(
         map(OsmAddress.parse_from_osm_element, elements)
     )
@@ -80,6 +96,33 @@ def download_osm_addresses() -> List[OsmAddress]:
 
     return osm_addresses
 
+
+def download_osm_alt_streets_names() -> Dict[str, str]:
+    osm_data: Optional[Dict[str, Any]] = download_osm_data(
+        Config.TERYT_TERC,
+        QUERY_STREET
+    )
+    if osm_data is None:
+        logging.error(
+            _('Error with downloading OSM (Overpass) street names data.')
+        )
+        sys.exit(4)
+
+    elements: List[Dict[str, Any]] = osm_data['elements']
+    logging.debug(
+        _('Downloaded {} OSM street elements.').format(len(elements))
+    )
+
+    osm_streets: Dict[str, str] = parse_streets_names_from_elements(elements)
+    unique_street = set(w['tags']['name'] for w in elements)
+    logging.info(
+        _('Parsed {} OSM unique streets with {} alternate names.').format(
+            len(unique_street),
+            len(osm_streets)
+        )
+    )
+
+    return osm_streets
 
 def report_osm_type(osm_addresses: List[OsmAddress]) -> str:
     osm_type_dist = addr_type_distribution(osm_addresses).most_common()
@@ -169,10 +212,17 @@ def main():
     # Create teryt_terc output directory if not exists
     pathlib.Path(Config.OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
 
-    # Download e-mapa and OSM adddresses
+    # Download e-mapa and OSM adddresses and streets
     emapa_addresses: List[Address] = download_emapa_addresses()
     replace_streets_with_osm_names(emapa_addresses)
     osm_addresses: List[OsmAddress] = download_osm_addresses()
+
+    if not Config.NO_STREET_ALT_NAMES_REPLACE:
+        osm_alt_streets_names = download_osm_alt_streets_names()
+        replace_streets_with_osm_alt_names(
+            emapa_addresses,
+            osm_alt_streets_names
+        )
 
     # Analysis reports
     print('\n')
@@ -239,6 +289,15 @@ if __name__ == '__main__':
         dest='no_street_names_update_check'
     )
     parser.add_argument(
+        '--no-street-alt-names-replace',
+        help=_(
+            'skip downloading OSM streets to not matching more names'
+            ' in e-mapa data using alt tags like {}.'
+        ).format('official_name'),
+        action='store_true',
+        dest='no_street_alt_names_replace'
+    )
+    parser.add_argument(
         '-icsh',
         '--ignore-case-sensitive-housenumber',
         help=_(
@@ -274,6 +333,7 @@ if __name__ == '__main__':
     Config.OUTPUT_DIR = path.join(Config.OUTPUT_BASE, teryt_terc)
     Config.DUPLICATES_EXCLUDE_POI = args.duplicates_exclude_poi
     Config.NO_STREET_NAMES_UPDATE_CHECK = args.no_street_names_update_check
+    Config.NO_STREET_ALT_NAMES_REPLACE = args.no_street_alt_names_replace
     Config.IGNORE_CASE_SENSITIVE_HOUSENUMBER = args.ignore_cs_housenumber
     Config.IGNORE_STREET_FEATURES = args.ignore_street_features
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: osm-emapa-addresses-diff\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 19:19+0100\n"
-"PO-Revision-Date: 2022-11-26 19:20+0100\n"
+"POT-Creation-Date: 2022-12-14 15:30+0100\n"
+"PO-Revision-Date: 2022-12-14 15:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -19,6 +19,10 @@ msgstr ""
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: pl\n"
 "X-Poedit-SearchPath-1: base.pot\n"
+
+#: utils/alt_street_names.py:70
+msgid "Matched and replaced {} streets to alternate OSM streets names"
+msgstr "Dopasowano i zastąpiono {} ulic do alternatywnych nazw ulic z OSM"
 
 #: utils/emapa_downloader.py:58
 msgid "Parsed columns: {} {} {}"
@@ -50,19 +54,19 @@ msgstr "Nowa aktualizacja dla pliku {} jest dostępna!"
 msgid "Matched and replaced {} streets to existing OSM street names"
 msgstr "Dopasowano i zastąpiono {} ulic do istniejących nazw ulic z OSM"
 
-#: utils/overpass.py:29
+#: utils/overpass.py:34
 msgid "Loaded Overpass query from file: {}"
 msgstr "Załadowano zapytanie Overpass z pliku: {}"
 
-#: utils/overpass.py:34
+#: utils/overpass.py:39
 msgid "Downloading Overpass data for {} area..."
 msgstr "Pobieranie danych Overpass dla obszaru {}..."
 
-#: utils/overpass.py:42
+#: utils/overpass.py:47
 msgid "Incorrect status code: {}"
 msgstr "Nieprawidłowy kod status: {}"
 
-#: utils/overpass.py:50
+#: utils/overpass.py:55
 msgid "Error with downloading/parsing data: {}"
 msgstr "Błąd pobierania/przetwarzania danych: {}"
 
@@ -90,47 +94,59 @@ msgstr "Nie udało się przetworzyć wiersza: {}"
 msgid "Incorrect teryt_terc!"
 msgstr "Niepoprawny teryt_terc!"
 
-#: main.py:40
+#: main.py:49
 msgid "Teryt {} not found at GUGiK website!"
 msgstr "Nie znaleziono terytu {} na stronie GUGiKa!"
 
-#: main.py:45
+#: main.py:54
 msgid "Not found e-mapa service for teryt: {}"
 msgstr "Nie znaleziono e-mapy dla podanego terytu: {}"
 
-#: main.py:51
+#: main.py:60
 msgid "Error with downloading/saving data: {}"
 msgstr "Błąd podczas pobierania/zapisu danych: {}"
 
-#: main.py:61
+#: main.py:70
 msgid "Parsed {} e-mapa addresses."
 msgstr "Przetworzono {} adresów z e-mapy."
 
-#: main.py:68
-msgid "Error with downloading OSM (Overpass) data."
-msgstr "Błąd pobierania danych OSM (Overpass)."
+#: main.py:81
+msgid "Error with downloading OSM (Overpass) addresses data."
+msgstr "Błąd pobierania danych adresowych OSM (Overpass)."
 
-#: main.py:75
-msgid "Downloaded {} OSM elements."
-msgstr "Pobrano {} elementów OSM."
+#: main.py:89
+msgid "Downloaded {} OSM addresses elements."
+msgstr "Pobrano {} elementów adresowych OSM."
 
-#: main.py:79
+#: main.py:95
 msgid "Parsed {} OSM addresses."
 msgstr "Przetworzono {} adresów OSM."
 
-#: main.py:86
+#: main.py:107
+msgid "Error with downloading OSM (Overpass) street names data."
+msgstr "Błąd pobierania danych ulic OSM (Overpass)."
+
+#: main.py:113
+msgid "Downloaded {} OSM street elements."
+msgstr "Pobrano {} elementów ulic OSM."
+
+#: main.py:119
+msgid "Parsed {} OSM unique streets with {} alternate names."
+msgstr "Przetworzono {} unikalnych ulic OSM z {} alternatywnymi nazwami."
+
+#: main.py:129
 msgid "OSM object type:"
 msgstr "Typ obiektu OSM:"
 
-#: main.py:93
+#: main.py:136
 msgid "Key-values distribution:"
 msgstr "Rozkład Klucz-Wartość:"
 
-#: main.py:105
+#: main.py:148
 msgid "Duplicated OSM addresses:"
 msgstr "Zduplikowane adresy OSM:"
 
-#: main.py:130 main.py:153
+#: main.py:173 main.py:196
 msgid ""
 "You can load it in the JOSM using \"Download object\" function (CTRL + SHIFT "
 "+ O)."
@@ -138,23 +154,23 @@ msgstr ""
 "Możesz załadować to do JOSMa używając funkcji \"Pobieranie obiektu\" (CTRL + "
 "SHIFT + O)."
 
-#: main.py:134
+#: main.py:177
 msgid "Each line is for 1 address"
 msgstr "Na każdą linię przypada 1 adres"
 
-#: main.py:189
+#: main.py:239
 msgid "Missing OSM addresses which exist in the e-mapa: {}"
 msgstr "Brakujące adresy OSM, które istnieją w e-mapie: {}"
 
-#: main.py:198
+#: main.py:248
 msgid "Excess OSM addresses which do not exist in the e-mapa: {}"
 msgstr "Nadmiarowe adresy OSM, które nie istnieją w e-mapie: {}"
 
-#: main.py:221
+#: main.py:271
 msgid "id of commune (gmina) – 7 characters."
 msgstr "identyfikator gminy – 7 znaków."
 
-#: main.py:227
+#: main.py:277
 msgid ""
 "exclude addresses on POI objects from duplicates (skipping POI with building "
 "key)."
@@ -162,11 +178,19 @@ msgstr ""
 "wyklucz adresy na obiektach POI z duplikatów (pomijanie POI z kluczem "
 "budynku)."
 
-#: main.py:235
+#: main.py:285
 msgid "skip checking update for the {} file from GitHub."
 msgstr "pomiń sprawdzenie aktualizacji dla pliku {} z GitHuba."
 
-#: main.py:245
+#: main.py:294
+msgid ""
+"skip downloading OSM streets to not matching more names in e-mapa data using "
+"alt tags like {}."
+msgstr ""
+"pomiń pobieranie ulic OSM, aby nie dopasowywać więcej nazw w danych e-mapy, "
+"używając alternatywnych tagów takich jak {}."
+
+#: main.py:304
 msgid ""
 "ignore difference between capital and lower-case letters for house numbers e."
 "g. 12a will be processed same as 12A."
@@ -174,15 +198,15 @@ msgstr ""
 "ignorowanie różnicy między małymi i wielkimi literami dla numerów domów np. "
 "12a będzie przetworzony tak samo jak 12A."
 
-#: main.py:255
+#: main.py:314
 msgid "ignore ULIC features in street names such as \"al.\" or \"plac\"."
 msgstr "ignorowanie cech ULIC w nazwach ulic takich jak \"al.\" lub \"plac\"."
 
-#: main.py:266
+#: main.py:325
 msgid "Parsed teryt_terc ({}) as: {}"
 msgstr "Przetworzono teryt_terc ({}) jako: {}"
 
-#: main.py:269
+#: main.py:328
 msgid "Cannot parse teryt terc parameter!"
 msgstr "Nie można przetworzyć parametru teryt terc!"
 
