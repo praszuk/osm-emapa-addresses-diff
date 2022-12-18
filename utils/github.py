@@ -1,10 +1,9 @@
-import logging
 import requests
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from config import gettext as _
+from config import gettext as _, logger
 
 
 _API_URL = 'https://api.github.com/repos/<user>/<repo>/commits?path=<path>'
@@ -28,7 +27,7 @@ def get_file_commits(user: str, repo: str, path: str) -> List[Dict[Any, Any]]:
         return requests.get(url).json()
 
     except (IOError, requests.JSONDecodeError):
-        logging.exception(_('Error with downloading data from GitHub API!'))
+        logger.exception(_('Error with downloading data from GitHub API!'))
         return []
 
 
@@ -51,7 +50,7 @@ def get_latest_commit_dt(
         return _parse_github_dt(raw_dt)
 
     except (IndexError, KeyError, ValueError):
-        logging.exception(_('Error with parsing data from GitHub API!'))
+        logger.exception(_('Error with parsing data from GitHub API!'))
         return None
 
 
@@ -64,7 +63,7 @@ def download_file(user: str, repo: str, path: str) -> Optional[str]:
 
         response = requests.get(url)
         if response.status_code != 200:
-            logging.exception(_(
+            logger.exception(_(
                 'Incorrect status code at downloading github file: {}'
             ).format(response.status_code))
 
@@ -73,5 +72,5 @@ def download_file(user: str, repo: str, path: str) -> Optional[str]:
         return response.text
 
     except IOError:
-        logging.exception(_('Error with downloading raw data from GitHub!'))
+        logger.exception(_('Error with downloading raw data from GitHub!'))
         return None

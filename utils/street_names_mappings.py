@@ -1,13 +1,10 @@
-import logging
-
 from datetime import datetime
 from csv import DictReader
 from os import path
 from typing import Dict, List, Optional
 
 from address import Address
-from config import Config
-from config import gettext as _
+from config import Config, gettext as _, logger
 from utils.github import (
     download_file,
     get_file_commits,
@@ -35,7 +32,7 @@ def _load_current_file_dt() -> Optional[datetime]:
             return datetime.fromisoformat(dt_file.read().strip())
 
     except (IOError, ValueError):
-        logging.exception(_(
+        logger.exception(_(
             'Couldn\'t read local datetime of street names mappings data'
             ' from file: {}'
         ).format(filename))
@@ -87,7 +84,7 @@ def _update_street_names_data(remote_dt: datetime) -> None:
     with open(filename_dt, 'w') as f:
         f.write(remote_dt.isoformat())
 
-    logging.info(
+    logger.info(
         _('Updated street names mappings files using data from {}').format(
             filename_data,
             filename_dt,
@@ -104,10 +101,10 @@ def _street_names_autoupdate():
     remote_dt = _get_remote_file_dt()
 
     if local_dt == remote_dt:
-        logging.debug('No autoupdate of street names mappings needed.')
+        logger.debug('No autoupdate of street names mappings needed.')
         return
 
-    logging.warning(
+    logger.warning(
         _('New update for the {} file is available!').format(
             STREET_NAMES_FILENAME
         )
@@ -133,7 +130,7 @@ def replace_streets_with_osm_names(emapa_addresses: List[Address]) -> None:
         try:
             _street_names_autoupdate()
         except ValueError:
-            logging.exception('Couldn\'t autoupdate street names mappigns!')
+            logger.exception('Couldn\'t autoupdate street names mappigns!')
 
     street_names: Dict[str, Dict[str, str]] = _load_mappings_data()
     matched_streets = set()
@@ -152,7 +149,7 @@ def replace_streets_with_osm_names(emapa_addresses: List[Address]) -> None:
         addr.street = new_street_name
         matched_streets.add(new_street_name)
 
-    logging.info(
+    logger.info(
         _(
             'Matched and replaced {} '
             'streets to existing OSM street names'

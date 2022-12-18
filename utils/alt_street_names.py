@@ -1,9 +1,7 @@
-import logging
-
 from typing import Any, Dict, List
 
 from address import Address
-from config import gettext as _
+from config import gettext as _, logger
 
 
 ALT_NAME_KEYS = {
@@ -65,7 +63,7 @@ def replace_streets_with_osm_alt_names(
         addr.street = new_street_name
         matched_streets.add(new_street_name)
 
-    logging.info(
+    logger.info(
         _(
             'Matched and replaced {} '
             'streets to alternate OSM streets names'

@@ -1,5 +1,4 @@
 import json
-import logging
 import pathlib
 import sys
 
@@ -14,8 +13,7 @@ from analyze import (
     addr_missing
 )
 from address import Address, OsmAddress
-from config import Config
-from config import gettext as _
+from config import Config, gettext as _, logger
 from parsers.emapa import parse_emapa_file
 from parsers.teryt import parse_teryt_terc_file
 from exceptions import TerytNotFound, EmapaServiceNotFound
@@ -45,19 +43,19 @@ def download_emapa_addresses() -> List[Address]:
         local_system_url = download_emapa_csv(Config.TERYT_TERC, csv_filename)
 
     except TerytNotFound:
-        logging.error(
+        logger.error(
             _('Teryt {} not found at GUGiK website!').format(Config.TERYT_TERC)
         )
         sys.exit(2)
     except EmapaServiceNotFound:
-        logging.error(
+        logger.error(
             _('Not found e-mapa service for teryt: {}').format(
                 Config.TERYT_TERC
             )
         )
         sys.exit(3)
     except IOError as err:
-        logging.error(_('Error with downloading/saving data: {}').format(err))
+        logger.error(_('Error with downloading/saving data: {}').format(err))
         sys.exit(4)
 
     emapa_addresess: List[Address] = parse_emapa_file(
@@ -67,7 +65,7 @@ def download_emapa_addresses() -> List[Address]:
     for addr in emapa_addresess:
         addr.source_addr = local_system_url
 
-    logging.info(_('Parsed {} e-mapa addresses.').format(len(emapa_addresess)))
+    logger.info(_('Parsed {} e-mapa addresses.').format(len(emapa_addresess)))
     return emapa_addresess
 
 
@@ -77,7 +75,7 @@ def download_osm_addresses() -> List[OsmAddress]:
         QUERY_ADDR
     )
     if osm_data is None:
-        logging.error(
+        logger.error(
             _('Error with downloading OSM (Overpass) addresses data.')
         )
         sys.exit(4)
@@ -86,13 +84,13 @@ def download_osm_addresses() -> List[OsmAddress]:
         filter(is_element, osm_data['elements'])
     )
 
-    logging.debug(_('Downloaded {} OSM addresses elements.').format(
+    logger.debug(_('Downloaded {} OSM addresses elements.').format(
         len(elements))
     )
     osm_addresses: List[OsmAddress] = list(
         map(OsmAddress.parse_from_osm_element, elements)
     )
-    logging.info(_('Parsed {} OSM addresses.').format(len(osm_addresses)))
+    logger.info(_('Parsed {} OSM addresses.').format(len(osm_addresses)))
 
     return osm_addresses
 
@@ -103,19 +101,19 @@ def download_osm_alt_streets_names() -> Dict[str, str]:
         QUERY_STREET
     )
     if osm_data is None:
-        logging.error(
+        logger.error(
             _('Error with downloading OSM (Overpass) street names data.')
         )
         sys.exit(4)
 
     elements: List[Dict[str, Any]] = osm_data['elements']
-    logging.debug(
+    logger.debug(
         _('Downloaded {} OSM street elements.').format(len(elements))
     )
 
     osm_streets: Dict[str, str] = parse_streets_names_from_elements(elements)
     unique_street = set(w['tags']['name'] for w in elements)
-    logging.info(
+    logger.info(
         _('Parsed {} OSM unique streets with {} alternate names.').format(
             len(unique_street),
             len(osm_streets)
@@ -225,29 +223,38 @@ def main():
         )
 
     # Analysis reports
-    print('\n')
-    print(report_osm_type(osm_addresses), end='\n\n')
-    print(report_key_value_distribution(osm_addresses), end='\n\n')
+    logger.info(
+        f'\n{report_osm_type(osm_addresses)}\n',
+        extra={'simple_fmt': True}
+    )
+    logger.info(
+        f'{report_key_value_distribution(osm_addresses)}\n',
+        extra={'simple_fmt': True}
+    )
 
     duplicated_osm_addresses = addr_duplicates(osm_addresses)
-    print(
-        report_duplicates(duplicated_osm_addresses, osm_addresses),
-        end='\n\n'
+    logger.info(
+        f'{report_duplicates(duplicated_osm_addresses, osm_addresses)}\n',
+        extra={'simple_fmt': True}
     )
 
     missing_emapa_addresses = addr_missing(osm_addresses, emapa_addresses)
-    print(_('Missing OSM addresses which exist in the e-mapa: {}').format(
-        len(missing_emapa_addresses)
-    ))
+    logger.info(
+        _('Missing OSM addresses which exist in the e-mapa: {}').format(
+            len(missing_emapa_addresses)
+        ),
+        extra={'simple_fmt': True}
+    )
 
     excess_osm_addresses: List[OsmAddress] = addr_missing(
         emapa_addresses,
         osm_addresses
     )
-    print(
+    logger.info(
         _('Excess OSM addresses which do not exist in the e-mapa: {}').format(
             len(excess_osm_addresses)
-        )
+        ),
+        extra={'simple_fmt': True}
     )
 
     # Save data to files
@@ -258,12 +265,6 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-
     # Parse and check arguments from user input
     parser = ArgumentParser()
     parser.add_argument(
@@ -321,11 +322,11 @@ if __name__ == '__main__':
     teryt_terc: str = args.teryt_terc
     try:
         area_name = parse_teryt_terc_file(TERYT_TERC_FILE, teryt_terc)
-        logging.info(
+        logger.info(
             _('Parsed teryt_terc ({}) as: {}').format(teryt_terc, area_name)
         )
     except (ValueError, IOError) as e:
-        logging.error(_('Cannot parse teryt terc parameter!') + f' {e}')
+        logger.error(_('Cannot parse teryt terc parameter!') + f' {e}')
         sys.exit(1)
 
     Config.TERYT_TERC = teryt_terc

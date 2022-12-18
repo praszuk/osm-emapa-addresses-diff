@@ -1,12 +1,10 @@
 import requests
-import logging
 
 from os import path
 from time import sleep
 from typing import Any, Dict, Optional
 
-from config import Config
-from config import gettext as _
+from config import Config, gettext as _, logger
 
 
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
@@ -30,12 +28,12 @@ def download_osm_data(
     with open(query_filename, 'r') as f:
         query = f.read().strip().replace('<teryt_terc>', teryt_terc)
 
-    logging.info(
+    logger.info(
         _('Loaded Overpass query from file: {}').format(
             path.split(query_filename)[-1]
         )
     )
-    logging.info(
+    logger.info(
         _('Downloading Overpass data for {} area...').format(teryt_terc)
     )
 
@@ -43,7 +41,7 @@ def download_osm_data(
         try:
             response = requests.get(OVERPASS_API_URL, params={'data': query})
             if response.status_code != 200:
-                logging.warning(
+                logger.warning(
                     _('Incorrect status code: {}').format(response.status_code)
                 )
                 continue
@@ -51,7 +49,7 @@ def download_osm_data(
             return response.json()
 
         except Exception as e:
-            logging.error(
+            logger.error(
                 _('Error with downloading/parsing data: {}').format(e)
             )
 
