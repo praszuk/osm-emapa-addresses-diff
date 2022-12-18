@@ -1,10 +1,9 @@
-import logging
 import requests
 
 from typing import Optional, Tuple
 from lxml import etree
 
-from config import gettext as _
+from config import gettext as _, logger
 from exceptions import EmapaServiceNotFound, TerytNotFound
 
 
@@ -55,10 +54,10 @@ def _parse_response(
         )
 
         if c_teryt == teryt:
-            logging.debug(_('Parsed columns: {} {} {}').format(
+            logger.debug(_('Parsed columns: {} {} {}').format(
                 c_teryt, c_csv, c_local_system_url
             ))
-            logging.debug('Raw: {} {} {}'.format(
+            logger.debug('Raw: {} {} {}'.format(
                 etree.tostring(elem_teryt),
                 etree.tostring(elem_csv),
                 etree.tostring(elem_system_url)
@@ -82,7 +81,7 @@ def download_emapa_csv(teryt_terc: str, csv_filename: str) -> str:
 
     Download e-mapa csv file with addresses from GUGiK site
     """
-    logging.info(_('Downloading e-mapa csv data...'))
+    logger.info(_('Downloading e-mapa csv data...'))
     response = requests.get(EMAPA_ADDRESSES_URL)
     csv_uri, local_system_url = _parse_response(teryt_terc, response.text)
 
