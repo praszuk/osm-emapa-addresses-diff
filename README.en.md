@@ -31,7 +31,7 @@ The tool uses the [public address data list](https://integracja.gugik.gov.pl/dan
 
 If the teryt_terc is successful and the OSM data is retrieved, the application will print (into terminal) report of the address analysis and create 4 files in the `out/<teryt_terc>/` directory:
 - emapa_addresses_all.geojson – contains all addresses from the e-mapa parsed to OSM format.
-- emapa_addresses_raw.csv – raw data in CSV format downloaded from the e-mapa.
+- emapa_addresses_raw.gml – raw data in GML format downloaded from the e-mapa.
 - emapa_addresses_missing.geojson – contains missing addresses from the e-mapa parsed to OSM format.
 - osm_addresses_excess.txt – contains a list of OSM object identifiers in the format \[n,w,r\]\<object id\> (np. w123), separated by commas, which can be loaded in [JOSM](https://josm.openstreetmap.de/) using the "Download object" feature (CTRL + SHIT + O).
 - osm_addresses_duplicates.txt – contains a list of OSM object identifiers in the format same as excess addresses, but each line is for 1 address.

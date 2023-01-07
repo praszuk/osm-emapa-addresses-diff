@@ -30,7 +30,7 @@ Narzędzie korzysta z [publicznej listy danych adresowych](https://integracja.gu
 
 Jeśli sprawdzenie terytu_terc się powiedzie i dane OSM zostaną pobrane, aplikacja wyświetli tekstowy raport z analizy adresów oraz utworzy 4 pliki w katalogu `out/<teryt_terc>/`:
 - emapa_addresses_all.geojson – zawiera wszystkie adresy z e-mapy przetworzone do formatu OSM.
-- emapa_addresses_raw.csv – dane nieprzetworzone w formacie CSV pobrane od e-mapy.
+- emapa_addresses_raw.gml – dane nieprzetworzone w formacie GML pobrane od e-mapy.
 - emapa_addresses_missing.geojson – zawiera brakujące adresy z e-mapy przetworzone do formatu OSM.
 - osm_addresses_excess.txt – zawiera listę identyfikatorów obiektów OSM w formacie \[n,w,r\]\<id obiektu\> (np. w123), rozdzieloną przecinkami, którą można wczytać w [JOSM](https://josm.openstreetmap.de/) korzystając z funkcjonalności "Pobierz obiekt" (CTRL + SHIT + O).
 - osm_addresses_duplicates.txt – zawiera listę identyfikatorów obiektów OSM w takim samym formacie jak adresy nadmiarowe, ale na każdą linię pliku przypada 1 adres.
