@@ -16,12 +16,12 @@ from address import Address, OsmAddress
 from config import Config, gettext as _, logger
 from parsers.emapa import parse_emapa_file
 from parsers.teryt import parse_teryt_terc_file
-from exceptions import TerytNotFound, EmapaServiceNotFound
+from exceptions import ServiceNotFound
 from utils.alt_street_names import (
     parse_streets_names_from_elements,
     replace_streets_with_osm_alt_names
 )
-from utils.emapa_downloader import download_emapa_csv
+from utils.emapa_downloader import download_emapa_gml
 from utils.overpass import (
     download_osm_data,
     is_element,
@@ -38,28 +38,24 @@ TERYT_TERC_FILE: str = path.join(Config.DATA_DIR, 'terc.csv')
 
 
 def download_emapa_addresses() -> List[Address]:
+    local_system_url = f'{Config.AREA_NAME.lower()}.e-mapa.net'
     try:
-        csv_filename = path.join(Config.OUTPUT_DIR, 'emapa_addresses_raw.csv')
-        local_system_url = download_emapa_csv(Config.TERYT_TERC, csv_filename)
+        gml_filename = path.join(Config.OUTPUT_DIR, 'emapa_addresses_raw.gml')
+        download_emapa_gml(Config.TERYT_TERC[:-1], gml_filename)
 
-    except TerytNotFound:
+    except ServiceNotFound:
         logger.error(
-            _('Teryt {} not found at GUGiK website!').format(Config.TERYT_TERC)
-        )
-        sys.exit(2)
-    except EmapaServiceNotFound:
-        logger.error(
-            _('Not found e-mapa service for teryt: {}').format(
+            _('Not found e-mapa service for teryt_terc: {}').format(
                 Config.TERYT_TERC
             )
         )
-        sys.exit(3)
+        sys.exit(2)
     except IOError as err:
         logger.error(_('Error with downloading/saving data: {}').format(err))
-        sys.exit(4)
+        sys.exit(3)
 
     emapa_addresess: List[Address] = parse_emapa_file(
-        csv_filename,
+        gml_filename,
         local_system_url
     )
     for addr in emapa_addresess:
