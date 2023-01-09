@@ -1,6 +1,7 @@
 import json
 import pathlib
 import sys
+import unicodedata
 
 from argparse import ArgumentParser
 from os import path
@@ -38,7 +39,11 @@ TERYT_TERC_FILE: str = path.join(Config.DATA_DIR, 'terc.csv')
 
 
 def download_emapa_addresses() -> List[Address]:
-    local_system_url = f'{Config.AREA_NAME.lower()}.e-mapa.net'
+    local_name = unicodedata.normalize(
+        'NFKD', Config.AREA_NAME.lower()
+    ).encode('ascii', 'ignore').decode('utf-8')
+
+    local_system_url = f'{local_name}.e-mapa.net'
     try:
         gml_filename = path.join(Config.OUTPUT_DIR, 'emapa_addresses_raw.gml')
         download_emapa_gml(Config.TERYT_TERC[:-1], gml_filename)
