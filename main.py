@@ -163,7 +163,11 @@ def save_missing_addresses(missing_emapa_addresses: List[Address]) -> None:
 def save_duplicated_addresses(
     duplicated_osm_addresses: List[List[OsmAddress]]
 ) -> None:
-    assert type(duplicated_osm_addresses[0][0]) == OsmAddress
+    if (
+        duplicated_osm_addresses
+        and type(duplicated_osm_addresses[0][0]) != OsmAddress
+    ):
+        raise AssertionError
 
     filename = 'osm_addresses_duplicates.txt'
     with open(path.join(Config.OUTPUT_DIR, filename), 'w') as f:
