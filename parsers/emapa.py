@@ -43,6 +43,7 @@ def _parse_gml_address_element(
         source=address_source
     )
 
+
 def parse_emapa_file(input_filename: str, source: str) -> List[Address]:
     """
     :param input_filename: gml file with addresses data
@@ -61,3 +62,15 @@ def parse_emapa_file(input_filename: str, source: str) -> List[Address]:
         ))
 
     return addresses
+
+
+def parse_emapa_url(content: str) -> Optional[str]:
+    """
+    :param content: XML/GML content from punktyadresowe url for specific teryt
+    :return: url to e-mapa service or None
+    """
+    root = etree.fromstring(bytes(content, encoding='utf-8'))
+    keywords = root.findall('.//{http://www.opengis.net/wms}Keyword')[0]
+    area_id = keywords.text.strip().split()[-1]
+
+    return f'{area_id}.e-mapa.net'
