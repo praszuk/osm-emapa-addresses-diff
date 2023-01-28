@@ -1,7 +1,6 @@
 import json
 import pathlib
 import sys
-import unicodedata
 
 from argparse import ArgumentParser
 from os import path
@@ -15,14 +14,17 @@ from analyze import (
 )
 from address import Address, OsmAddress
 from config import Config, gettext as _, logger
-from parsers.emapa import parse_emapa_file
+from parsers.emapa import parse_emapa_file, parse_emapa_url
 from parsers.teryt import parse_teryt_terc_file
 from exceptions import ServiceNotFound
 from utils.alt_street_names import (
     parse_streets_names_from_elements,
     replace_streets_with_osm_alt_names
 )
-from utils.emapa_downloader import download_emapa_gml
+from utils.emapa_downloader import (
+    download_emapa_gml,
+    download_punktyadresowe_metadata
+)
 from utils.overpass import (
     download_osm_data,
     is_element,
@@ -39,12 +41,10 @@ TERYT_TERC_FILE: str = path.join(Config.DATA_DIR, 'terc.csv')
 
 
 def download_emapa_addresses() -> List[Address]:
-    local_name = unicodedata.normalize(
-        'NFKD', Config.AREA_NAME.lower()
-    ).encode('ascii', 'ignore').decode('utf-8')
-
-    local_system_url = f'{local_name}.e-mapa.net'
     try:
+        metadata = download_punktyadresowe_metadata(Config.TERYT_TERC[:-1])
+        local_system_url = parse_emapa_url(metadata)
+
         gml_filename = path.join(Config.OUTPUT_DIR, 'emapa_addresses_raw.gml')
         download_emapa_gml(Config.TERYT_TERC[:-1], gml_filename)
 
@@ -122,6 +122,7 @@ def download_osm_alt_streets_names() -> Dict[str, str]:
     )
 
     return osm_streets
+
 
 def report_osm_type(osm_addresses: List[OsmAddress]) -> str:
     osm_type_dist = addr_type_distribution(osm_addresses).most_common()
