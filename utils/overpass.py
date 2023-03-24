@@ -7,7 +7,7 @@ from typing import Any, Dict, Optional
 from config import Config, gettext as _, logger
 
 
-OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
+OVERPASS_API_URL = 'https://overpass-api.de/api/interpreter'
 QUERY_ADDR = path.join(Config.ROOT_DIR, 'utils', 'query_addr.overpassql')
 QUERY_STREET = path.join(Config.ROOT_DIR, 'utils', 'query_street.overpassql')
 
